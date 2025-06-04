@@ -1,3 +1,4 @@
+import addVisitor from "/controllers/VisitorController.js";
 $(document).on("click", "#seePass", function () {
   const pwordInput = $("#password");
   if ($(this).hasClass("fa-eye")) {
@@ -23,7 +24,9 @@ $(document).ready(function () {
       const provinces = regionData.province_list;
 
       $.each(provinces, function (provinceName) {
-        $provinceSelect.append($("<option>").val(provinceName).text(provinceName));
+        $provinceSelect.append(
+          $("<option>").val(provinceName).text(provinceName)
+        );
       });
     });
   });
@@ -66,6 +69,25 @@ $(document).ready(function () {
 
     $.each(barangays, function (i, brgy) {
       $brgySelect.append($("<option>").val(brgy).text(brgy));
+    });
+  });
+});
+$(document).ready(function () {
+  $("#registerForm").submit(function (event) {
+    event.preventDefault();
+    const formData = new FormData(this);
+    addVisitor(formData).then((res) => {
+      try {
+        const data = JSON.parse(res);
+        if (!data.status) {
+          alert(data.message);
+          return;
+        }
+
+        window.location.href = "/home";
+      } catch (err) {
+        alert(err.message);
+      }
     });
   });
 });

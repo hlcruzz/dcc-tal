@@ -1,15 +1,13 @@
-import addVisitor from "./controllers/VisitorController.js";
 $(document).ready(function () {
+  Cookies();
   ClickEvents();
   FetchEvents();
   ModalEvents();
   DataTables();
   ChartsJs();
 });
-
-function ClickEvents() {
-  $("#addVisitor");
-}
+function Cookies() {}
+function ClickEvents() {}
 function FetchEvents() {}
 function ModalEvents() {}
 function DataTables() {}

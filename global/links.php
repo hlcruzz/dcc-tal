@@ -8,3 +8,5 @@
 <script src="./assets/library/Datatables/datatables.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHSzo9ZR5hlmIuBoA7RdspKtGFKC0ahjI&callback=initMap" async
+    defer></script>

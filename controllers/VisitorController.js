@@ -1,4 +1,4 @@
-export function addVisitor(formData) {
+export default function addVisitor(formData) {
   return new Promise((resolve, reject) => {
     $.ajax({
       url: "./api/addVisitor.php",
