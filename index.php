@@ -2,9 +2,11 @@
 $URI = $_SERVER['REQUEST_URI'];
 switch ($URI) {
     case '/':
-        require "./user/pages/login.php";
+        require "./user/pages/register.php";
         break;
-
+    case '/home':
+        require "./user/pages/home.php";
+        break;
     default:
         # code...
         break;
