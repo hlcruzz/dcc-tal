@@ -1,5 +1,5 @@
 <?php
-include "./user/components/checkToken.php";
+require_once "./user/components/checkToken.php";
 ?>
 <html lang="en">
 
@@ -12,10 +12,10 @@ include "./user/components/checkToken.php";
 </head>
 
 <body>
-    <div class="grid h-full grid-cols-1 md:grid-cols-2">
+    <div class="grid h-full grid-cols-1 lg:grid-cols-2">
         <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3904.573551760292!2d122.96748287504143!3d10.74329908940348!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33aed6939b70f2a7%3A0x476610a2fa8f42b4!2sCarlos%20Hilado%20Memorial%20State%20University!5e1!3m2!1sen!2sph!4v1749042554748!5m2!1sen!2sph"
-            class="w-full h-[500px] md:h-full" style="border:0;" allowfullscreen="false" loading="lazy"
+            class="w-full h-[500px] lg:h-full" style="border:0;" allowfullscreen="false" loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"></iframe>
         <div class="p-10">
             <div class="flex flex-col justify-center items-center text-center">

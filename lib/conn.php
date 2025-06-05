@@ -4,7 +4,7 @@ try {
     $dbname = 'dcc_tal';
     $dbuser = 'root';
     $dbpass = '';
-    $connect = new PDO(
+    $conn = new PDO(
         "mysql:host=$dbhost;dbname=$dbname",
         $dbuser,
         $dbpass

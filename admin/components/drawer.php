@@ -1,0 +1,124 @@
+<div id="notif-drawer"
+    class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 "
+    tabindex="-1" aria-labelledby="drawer-right-label">
+    <h5 id="drawer-right-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 "><i
+            class="fa-solid fa-bell me-2"></i>Notifications</h5>
+    <button type="button" data-drawer-hide="notif-drawer" aria-controls="notif-drawer"
+        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center ">
+        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+        </svg>
+        <span class="sr-only">Close menu</span>
+    </button>
+    <div>
+        <h1>Hello</h1>
+    </div>
+</div>
+
+<!-- drawer component -->
+<div id="sidebar-drawer"
+    class="fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-80 flex flex-col"
+    tabindex="-1" aria-labelledby="drawer-left-label">
+    <div class="flex gap-3 items-center">
+        <img src="./assets/img/chmsu-logo.png" class="w-[50px] h-[50px] object-cover" alt="">
+        <div>
+            <h1 class="font-extrabold text-xl">CHMSU - DCC</h1>
+            <p class="text-xs">Talisay Campus</p>
+        </div>
+    </div>
+    <button type="button" data-drawer-hide="sidebar-drawer" aria-controls="sidebar-drawer"
+        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center ">
+        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+        </svg>
+        <span class="sr-only">Close menu</span>
+    </button>
+    <div class="flex flex-col justify-between grow mt-4">
+        <div class="max-h-full overflow-auto">
+            <ul class="flex flex-col gap-3">
+                <!-- Dashboard -->
+                <li class="flex rounded-lg font-medium bg-green-500 text-white">
+                    <a href="" class="w-full p-4 ps-6">
+                        <i class="fa-solid fa-house me-2"></i>Dashboard
+                    </a>
+                </li>
+
+                <!-- Visitors -->
+                <li class="flex rounded-lg text-gray-600 hover:bg-green-100/70">
+                    <a href="" class="w-full p-4 ps-6">
+                        <i class="fa-solid fa-user-group me-2"></i>Visitors
+                    </a>
+                </li>
+
+
+                <!-- Buildings Dropdown -->
+                <li class="relative group">
+                    <a href="#"
+                        class="flex justify-between p-4 ps-6 items-center focus:outline-none focus:bg-green-500 group-focus-within:flex rounded-lg text-gray-600 hover:bg-green-100/70 focus:text-white"
+                        tabindex="0">
+                        <span>
+                            <i class="fa-solid fa-building-columns me-2 text-xl"></i>Buildings
+                        </span>
+                        <i
+                            class="fa-solid fa-chevron-right group-focus-within:transform-[rotate(90deg)] transition-transform ease-in-out duration-300"></i>
+                    </a>
+
+                    <ul
+                        class="ms-2 max-h-0 overflow-hidden group-focus-within:max-h-96 bg-white z-10 transition-all ease-in-out duration-500">
+                        <li>
+                            <a href="#"
+                                class="block p-4 ps-6 hover:bg-green-100/70 text-gray-600 hover:translate-x-2 transition-transform ease-in-out duration-300">
+                                <i class="fa-solid fa-briefcase me-1"></i> Administrative
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="block p-4 ps-6 hover:bg-green-100/70 text-gray-600 hover:translate-x-2 transition-transform ease-in-out duration-300">
+                                <i class="fa-solid fa-graduation-cap me-1"></i> Academic
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="block p-4 ps-6 hover:bg-green-100/70 text-gray-600 hover:translate-x-2 transition-transform ease-in-out duration-300">
+                                <i class="fa-solid fa-house-user me-1"></i> Residential
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="block p-4 ps-6 hover:bg-green-100/70 text-gray-600 hover:translate-x-2 transition-transform ease-in-out duration-300">
+                                <i class="fa-solid fa-futbol me-1"></i> Recreational
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="block p-4 ps-6 hover:bg-green-100/70 text-gray-600 hover:translate-x-2 transition-transform ease-in-out duration-300">
+                                <i class="fa-solid fa-wrench me-1"></i> Utility
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="flex rounded-lg text-gray-600 hover:bg-green-100/70">
+                    <a href="" class="w-full p-4 ps-6">
+                        <i class="fa-solid fa-users me-2 text-lg"></i>Accounts
+                    </a>
+                </li>
+                <li class="flex rounded-lg text-gray-600 hover:bg-green-100/70">
+                    <a href="" class="w-full p-4 ps-6">
+                        <i class="fa-solid fa-arrow-trend-up me-2 text-lg"></i>Activity Logs
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <!-- Logout -->
+        <li class="flex rounded-lg text-gray-600 hover:bg-green-100/70">
+            <a href="/logout" class="w-full p-4 ps-6">
+                <i class="fa-solid fa-right-from-bracket text-lg me-2"></i>Logout
+            </a>
+        </li>
+    </div>
+</div>

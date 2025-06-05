@@ -7,7 +7,13 @@ switch ($URI) {
     case '/home':
         require "./user/pages/home.php";
         break;
+    case '/admin-login':
+        require "./admin/app.php";
+        break;
+    case '/dashboard':
+        require "./admin/pages/dashboard.php";
+        break;
     default:
-        # code...
+        echo "not found";
         break;
 }
