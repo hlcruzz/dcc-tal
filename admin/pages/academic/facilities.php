@@ -20,24 +20,30 @@ $tableName = "Academic - " . $_GET['building'] . " Facilities";
 
 <body>
 
-    <div
-        class="grid grid-cols-12 transition-all ease-in-out duration-500 h-screen max-h-screen overflow-auto bg-green-100">
-        <?php include "./admin/components/sidebar.php" ?>
+    <div class="grid grid-cols-12 transition-all ease-in-out duration-500 h-screen max-h-screen overflow-auto">
+        <?php
+        include "./admin/components/sidebar.php";
+        include "./admin/components/switch.php";
+        ?>
+
 
         <!-- Main Content Area -->
-        <div class="col-span-12 xl:col-span-10 min-h-screen overflow-auto bg-green-100 shadow-md p-5">
+        <div
+            class="col-span-12 xl:col-span-10 min-h-screen overflow-auto bg-green-100 dark:bg-emerald-900 shadow-md p-5">
             <?php include "./admin/components/header.php" ?>
-            <div class="bg-white rounded-lg mt-5 overflow-auto">
-                <div class="flex items-center justify-between border-b-1 p-5 px-7 border-gray-300">
-                    <h1 class="font-medium text-md sm:text-xl "><?php echo $tableName ?> Table
+            <div class="bg-white dark:bg-gray-800 rounded-lg mt-5 overflow-auto">
+                <div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-700 p-5 px-7">
+                    <h1 class="font-medium text-md sm:text-xl text-gray-900 dark:text-gray-100"><?php echo $tableName ?>
+                        Table
                     </h1>
                     <button type="button" data-modal-target="add-facility-modal" data-modal-toggle="add-facility-modal"
-                        class="focus:outline-none text-xs text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg px-5 py-2.5 me-2">
+                        class="focus:outline-none text-xs text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 font-medium rounded-lg px-5 py-2.5 me-2">
                         <i class="fa-solid fa-plus me-1"></i>Add
                     </button>
                 </div>
                 <div class="p-5 px-7">
-                    <table id="table-facility-<?php echo $_GET['id'] ?>" class="table w-full">
+                    <table id="table-facility-<?php echo $_GET['id'] ?>"
+                        class="table w-full text-gray-900 dark:text-gray-100">
                         <thead>
                             <tr>
                                 <th>
@@ -114,6 +120,7 @@ $tableName = "Academic - " . $_GET['building'] . " Facilities";
                     </table>
                 </div>
             </div>
+
 
 
         </div>

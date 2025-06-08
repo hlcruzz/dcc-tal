@@ -4,8 +4,12 @@
 <script src="./assets/library/fontawesome/js/all.min.js"></script>
 <script src="./assets/library/jquery/jquery-3.7.1.min.js"></script>
 <script src="./assets/library/jquery-cookies/jquery.cookie.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> -->
+<link href="./src/output.css" rel="stylesheet">
+
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.46.0/dist/apexcharts.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
 

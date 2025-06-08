@@ -12,7 +12,7 @@ import {
 // import { Modal } from "flowbite";
 
 $(document).ready(function () {
-  Cookies();
+  Theme();
   ClickEvents();
   FetchEvents();
   AddModalEvents();
@@ -21,7 +21,33 @@ $(document).ready(function () {
   ChartsJs();
   ModalInit();
 });
-function Cookies() {}
+function Theme() {
+  $("#switch").on("click", function () {
+    const icon = $("#iconTheme");
+    if ($(this).is(":checked")) {
+      icon.removeClass("fa-moon").addClass("fa-sun");
+      $("html").removeClass("light").addClass("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      icon.removeClass("fa-sun").addClass("fa-moon");
+      $("html").removeClass("dark").addClass("light");
+      localStorage.setItem("theme", "light");
+    }
+  });
+
+  $(document).ready(function () {
+    const theme = localStorage.getItem("theme");
+    if (theme === "dark") {
+      $("#switch").prop("checked", true);
+      $("#iconTheme").removeClass("fa-moon").addClass("fa-sun");
+      $("html").removeClass("light").addClass("dark");
+    } else {
+      $("#switch").prop("checked", false);
+      $("#iconTheme").removeClass("fa-sun").addClass("fa-moon");
+      $("html").removeClass("dark").addClass("light");
+    }
+  });
+}
 function ModalInit() {
   new Modal(document.getElementById("add-academics-modal"));
   new Modal(document.getElementById("edit-academics-modal"));
@@ -41,8 +67,8 @@ function DataTables() {
 
     obj.data.forEach((element) => {
       const content = `
-      <tr class="hover:bg-gray-50">
-        <td data-label="#" class="font-medium text-gray-900 whitespace-nowrap">
+      <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+        <td data-label="#" class="font-medium text-gray-900 dark:text-gray-100 whitespace-nowrap">
         ${element.building_id}
         </td>
         <td data-label="Building">${element.building_name}</td>
@@ -50,27 +76,32 @@ function DataTables() {
 
         <td data-label="Date">${element.created_at}</td>
         <td data-label="Structure">
-            
-            <span class="${
-              element.is_structured === 1
-                ? "bg-green-100 text-green-800"
-                : "bg-red-100 text-red-800"
-            } text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm">
+          <span class="${
+            element.is_structured === 1
+              ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
+              : "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300"
+          } text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm">
             ${element.is_structured === 1 ? "Yes" : "No"}
-            </span>
+          </span>
         </td>
         <td data-label="Accessibility">
           <span>
-              <label class="inline-flex items-center cursor-pointer">
-                  <input type="checkbox" value="${
-                    element.isAccessable
-                  }" class="sr-only peer" ${
+            <label class="inline-flex items-center cursor-pointer">
+              <input type="checkbox" value="${
+                element.isAccessable
+              }" class="sr-only peer" ${
         element.isAccessable === 1 ? "checked" : ""
       }>
-                  <div
-                      class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-4 rtl:peer-checked:after:-translate-x-4 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-4 after:h-4 after:transition-all peer-checked:bg-blue-600">
-                  </div>
-              </label>
+              <div
+                class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 rounded-full
+                      peer peer-checked:after:translate-x-4 rtl:peer-checked:after:-translate-x-4 peer-checked:after:border-white
+                      after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300
+                      after:border after:rounded-full after:w-4 after:h-4 after:transition-all peer-checked:bg-blue-600
+                      
+                      dark:bg-gray-700 dark:peer-focus:ring-blue-500 dark:after:bg-gray-800 dark:after:border-gray-600
+                      dark:peer-checked:bg-blue-500">
+              </div>
+            </label>
           </span>
         </td>
         <td data-label="Action">
@@ -134,8 +165,8 @@ function DataTables() {
 
       obj.data.forEach((element) => {
         const content = `
-        <tr class="hover:bg-gray-50">
-          <td data-label="#" class="font-medium text-gray-900 whitespace-nowrap">
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+          <td data-label="#" class="font-medium text-gray-900 dark:text-gray-100 whitespace-nowrap">
           ${element.facility_id}
           </td>
           <td data-label="Facility Name">${element.facilityName}</td>

@@ -80,25 +80,28 @@ export default function SimpleDataTable(tableSelector, options = {}) {
               : ""
           }
 
-          <div class="relative inline-block ">
-            <button type="button" class="export-dropdown-btn inline-flex items-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100">
+          <div class="relative inline-block">
+            <button type="button" 
+              class="export-dropdown-btn inline-flex items-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100
+                    dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700 dark:hover:text-primary-400 dark:focus:ring-gray-700">
               Export as
               <svg class="-me-0.5 ms-1.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
               </svg>
             </button>
 
-            <div class="export-dropdown absolute top-10 sm:right-0 z-50 mt-1 w-44 divide-y divide-gray-100 rounded-lg bg-white shadow-lg" style="display: none;">
-              <ul class="py-1 text-sm text-gray-700">
+            <div class="export-dropdown absolute top-10 sm:right-0 z-50 mt-1 w-44 divide-y divide-gray-100 rounded-lg bg-white shadow-lg
+                        dark:divide-gray-700 dark:bg-gray-800" style="display: none;">
+              <ul class="py-1 text-sm text-gray-700 dark:text-gray-100">
                 <li>
-                  <button type="button" class="export-btn w-full px-4 py-2 text-left hover:bg-gray-100" data-export-type="pdf">
+                  <button type="button" class="export-btn w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700" data-export-type="pdf">
                     ${exportHandlers.pdf.icon}<span>${
       exportHandlers.pdf.label
     }</span>
                   </button>
                 </li>
                 <li>
-                  <button type="button" class="export-btn w-full px-4 py-2 text-left hover:bg-gray-100" data-export-type="xls">
+                  <button type="button" class="export-btn w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700" data-export-type="xls">
                     ${exportHandlers.xls.icon}<span>${
       exportHandlers.xls.label
     }</span>
