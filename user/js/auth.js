@@ -73,21 +73,42 @@ $(document).ready(function () {
   });
 });
 $(document).ready(function () {
-  $("#registerForm").submit(function (event) {
-    event.preventDefault();
-    const formData = new FormData(this);
-    addVisitor(formData).then((res) => {
-      try {
-        const data = JSON.parse(res);
-        if (!data.status) {
-          alert(data.message);
-          return;
-        }
+  $("#registerForm :input").prop("disabled", true);
 
-        window.location.href = "/home";
-      } catch (err) {
-        alert(err.message);
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        $("#latitude").val(position.coords.latitude);
+        $("#longitude").val(position.coords.longitude);
+        $("#registerForm :input").prop("disabled", false);
+
+        $("#registerForm").submit(function (event) {
+          event.preventDefault();
+          const formData = new FormData(this);
+
+          addVisitor(formData).then((res) => {
+            try {
+              const data = JSON.parse(res);
+              if (!data.status) {
+                alert(data.message);
+                return;
+              }
+              window.location.href = "/home";
+            } catch (err) {
+              alert(err.message);
+            }
+          });
+        });
+      },
+      (error) => {
+        if (error.code === error.PERMISSION_DENIED) {
+          alert("Please enable location access to proceed.");
+        } else {
+          alert(`Geolocation error:  ${error.message}`);
+        }
       }
-    });
-  });
+    );
+  } else {
+    alert("Geolocation is not supported by this browser.");
+  }
 });

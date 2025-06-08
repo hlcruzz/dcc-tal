@@ -8,6 +8,14 @@ use Firebase\JWT\JWT;
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
     try {
+
+        if ((empty($_POST['latitude']) || $_POST['latitude'] === null) || (empty($_POST['longitude']) || $_POST['longitude'] === null)) {
+            echo json_encode([
+                "status" => false,
+                "message" => "Please enable location access to proceed."
+            ]);
+            exit;
+        }
         // JWT payload
         $payload = [
             "iss" => "", //domain
@@ -23,6 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 "city" => $_POST['city'],
                 "brgy" => $_POST['brgy'],
                 "street" => $_POST['street'],
+                "latitude" => $_POST['latitude'],
+                "longitude" => $_POST['longitude'],
                 "role" => "user"
             ]
         ];

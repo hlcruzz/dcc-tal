@@ -1,32 +1,39 @@
 @font-face {
   font-family: "Instrument Sans";
-  src: url("/assets/fonts/instrument-sans/fonts/webfonts/InstrumentSans-Regular.woff2") format("woff2"), url("/assets/fonts/instrument-sans/fonts/webfonts/InstrumentSans-Regular.woff") format("woff");
+  src: url("/assets/fonts/instrument-sans/fonts/webfonts/InstrumentSans-Regular.woff2")
+      format("woff2"),
+    url("/assets/fonts/instrument-sans/fonts/webfonts/InstrumentSans-Regular.woff")
+      format("woff");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Instrument Sans";
-  src: url("/assets/fonts/instrument-sans/fonts/webfonts/InstrumentSans-Medium.woff2") format("woff2"), url("/assets/fonts/instrument-sans/fonts/webfonts/InstrumentSans-Medium.woff") format("woff");
+  src: url("/assets/fonts/instrument-sans/fonts/webfonts/InstrumentSans-Medium.woff2")
+      format("woff2"),
+    url("/assets/fonts/instrument-sans/fonts/webfonts/InstrumentSans-Medium.woff")
+      format("woff");
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Instrument Sans";
-  src: url("/assets/fonts/instrument-sans/fonts/webfonts/InstrumentSans-SemiBold.woff2") format("woff2"),
-    url("/assets/fonts/instrument-sans/fonts/webfonts/InstrumentSans-SemiBold.woff") format("woff");
+  src: url("/assets/fonts/instrument-sans/fonts/webfonts/InstrumentSans-SemiBold.woff2")
+      format("woff2"),
+    url("/assets/fonts/instrument-sans/fonts/webfonts/InstrumentSans-SemiBold.woff")
+      format("woff");
   font-weight: 600;
   font-style: normal;
 }
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
 }
 body {
   font-family: "Instrument Sans", sans-serif;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 input::-webkit-outer-spin-button,
@@ -38,4 +45,40 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
+}
+/* Mobile responsive styles */
+@media (max-width: 850px) {
+  .table thead {
+    display: none;
+  }
+
+  .table tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.375rem;
+  }
+  .table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: right;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .table td:last-child {
+    border-bottom: 0;
+  }
+
+  .table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    margin-right: 1rem;
+  }
+
+  /* Special handling for the action column */
+  .table td[data-label="Action"] div {
+    justify-content: flex-end;
+  }
 }
