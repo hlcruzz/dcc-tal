@@ -13,6 +13,7 @@ $tableName = "Academic";
     include "./global/links.php";
     include "./admin/components/drawer.php";
     include "./admin/components/modal.php";
+
     ?>
     <script type="module" src="./admin/js/app.js"></script>
 

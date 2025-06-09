@@ -4,19 +4,21 @@ import sliceText from "../../Controllers/InputController.js";
 import {
   addBuilding,
   fetchAllBuilding,
+  deleteBuildingImg,
+  updateBuilding
 } from "../../Controllers/BuildingsController.js";
 import {
   addFacility,
   fetchAllFacility,
 } from "../../Controllers/FacilitiesController.js";
+import initSwiper from "../../Controllers/SwiperController.js";
 // import { Modal } from "flowbite";
 
 $(document).ready(function () {
   Theme();
   ClickEvents();
   FetchEvents();
-  AddModalEvents();
-  UpdateModalEvents();
+  ModalEvents();
   DataTables();
   ChartsJs();
   ModalInit();
@@ -52,8 +54,11 @@ function ModalInit() {
   new Modal(document.getElementById("add-academics-modal"));
   new Modal(document.getElementById("edit-academics-modal"));
   new Modal(document.getElementById("add-facility-modal"));
+
 }
-function FetchEvents() {}
+function FetchEvents() {
+  
+}
 function DataTables() {
   fetchAllBuilding("Academics").then((res) => {
     const obj = JSON.parse(res);
@@ -65,6 +70,7 @@ function DataTables() {
     const tbody = $(`${tableSelector} tbody`);
     tbody.empty();
 
+    console.log(obj)
     obj.data.forEach((element) => {
       const content = `
       <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
@@ -108,15 +114,15 @@ function DataTables() {
           <div class="flex flex-wrap gap-2">
               <button 
               data-modal-target="edit-academics-modal" data-modal-toggle="edit-academics-modal"
-              data-building-id = ${element.building_id}
-               data-building-name = ${element.building_name}
-               data-building-type = ${element.building_type}
-               data-building-accessable = ${element.isAccessable}
-               data-building-structured = ${element.is_structured}
-               data-building-lat = ${element.latitude}
-               data-building-long = ${element.longitude}
-               data-building-img-id = ${element.img_id}
-               data-building-img = ${element.img}
+              data-building-id = "${element.building_id}"
+               data-building-name = "${element.building_name}"
+               data-building-type = "${element.building_type}"
+               data-building-accessable = "${element.isAccessable}"
+               data-building-structured = "${element.is_structured}"
+               data-building-lat = "${element.latitude}"
+               data-building-long = "${element.longitude}"
+               data-building-img-id = "${element.img_id}"
+               data-building-img = "${element.img}"
               class="edit-academics-btn
               text-md text-white p-2 rounded-lg bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 active:bg-indigo-700 transition-colors duration-200 cursor-pointer">
                 <i class="fa-solid fa-pen"></i>
@@ -204,15 +210,28 @@ function DataTables() {
 function ChartsJs() {}
 
 function ClickEvents() {
-  $("#get-location").on("click", async function () {
+
+  $(document).on("click", ".get-location", async function(){
     const data = await getCoordinates();
 
     if (!data.status) {
       alert(data.message);
       return;
     }
+
     $("#latitude").val(data.lat);
     $("#longitude").val(data.long);
+
+    $("#latitude_facility").val(data.lat);
+    $("#longitude_facility").val(data.long);
+
+    $("#edit_academics_latitude").val(data.lat);
+    $("#edit_academics_longitude").val(data.long);
+    
+  })
+  $("#get-location").on("click", async function () {
+    
+    
   });
 
   $("#get-facility").on("click", async function () {
@@ -222,8 +241,7 @@ function ClickEvents() {
       alert(data.message);
       return;
     }
-    $("#latitude_facility").val(data.lat);
-    $("#longitude_facility").val(data.long);
+   
   });
 
   $("#hasRoomNum").on("click", function () {
@@ -251,9 +269,78 @@ function ClickEvents() {
       inputField.prop("required", false);
     }
   });
+
+  $("#edit_is_structured").on("click", function () {
+    const isClicked = $(this).is(":checked");
+
+    $(this).val(isClicked ? "1" : "0");
+  })
+
+  $(document).on("click", ".edit-academics-btn", function () {
+    const modalName = "edit-academics-modal";
+    const modal = new Modal(document.getElementById(`${modalName}`));
+    modal.show();
+
+    const building_id = $(this).attr("data-building-id");
+    const building_name = $(this).attr("data-building-name");
+    const building_type = $(this).attr("data-building-type");
+    const building_accessable = $(this).attr("data-building-accessable");
+    const building_structured = $(this).attr("data-building-structured");
+    const building_lat = $(this).attr("data-building-lat");
+    const building_long = $(this).attr("data-building-long");
+    const building_img_id = $(this).attr("data-building-img-id");
+    const building_img = $(this).attr("data-building-img");
+
+    // console.log(building_img)
+    $("#edit_building_id").val(building_id);
+    $("#edit_building_name").val(building_name);
+    $("#edit_building_type").val(building_type);
+    $("#edit_building_accessable").val(building_accessable);
+    $("#edit_is_structured").prop("checked", building_structured === "1").val(
+      building_structured
+    );
+    $("#edit_academics_latitude").val(building_lat);
+    $("#edit_academics_longitude").val(building_long);
+    $("#edit_building_img_id").val(building_img_id);
+
+    const images = building_img.split(",");
+    const imgIDs = building_img_id.split(",");
+    const $swiperWrapper = $(".swiper-wrapper");
+    $swiperWrapper.empty(); 
+    images.forEach((src, index) => {
+      const imgID = imgIDs[index];
+      const slide = `
+        <div class="swiper-slide relative">
+          <img src="${src}" class="w-full h-full object-cover" alt="Slide Image">
+          ${imgIDs.length !== 1 ? `<i class="delete-academic-img cursor-pointer fa-solid fa-trash absolute bottom-3 right-3 text-md p-2 px-2.5 rounded-full text-red-500 dark:text-red-700 bg-white dark:bg-gray-800" data-img-id="${imgID}" title="${index}"></i>` : ""}
+        </div>
+      `;
+      $swiperWrapper.append(slide);
+    });
+    initSwiper();
+
+    $(document).on("click", `[data-modal-hide='${modalName}']`, function() {
+      modal.hide();
+    });
+  });
+
+  $(document).on("click", ".delete-academic-img", function(){
+    const id = $(this).attr("data-img-id");
+    deleteBuildingImg(id).then((res) => {
+      const obj = JSON.parse(res);
+      if (!obj.status) {
+        alert(obj.message);
+        return;
+      }
+      alert("Image Deleted");
+      location.reload();
+    }).catch((error) => {
+      alert("Error: " + error.message, false);
+    });
+  })
 }
 
-function AddModalEvents() {
+function ModalEvents() {
   $("#add-academics-form").submit(function (e) {
     e.preventDefault();
     const formData = new FormData(this);
@@ -275,6 +362,29 @@ function AddModalEvents() {
         alert("Error: " + error.message, false);
       });
   });
+
+  $("#edit-academics-form").submit(function (e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    formData.append("building_type", "Academics");
+
+    updateBuilding(formData)
+      .then((res) => {
+        const obj = JSON.parse(res);
+
+        if (!obj.status) {
+          alert(obj.message);
+          return;
+        }
+
+        alert("Building Updated");
+        location.reload();
+      })
+      .catch((error) => {
+        alert("Error: " + error.message, false);
+      });
+  });
+
   $("#add-facility-form").submit(function (e) {
     e.preventDefault();
     const formData = new FormData(this);
@@ -293,31 +403,5 @@ function AddModalEvents() {
       .catch((error) => {
         alert("Error: " + error.message, false);
       });
-  });
-}
-function UpdateModalEvents() {
-  $(document).on("click", ".edit-academics-btn", function () {
-    const modal = new Modal(document.getElementById("edit-academics-modal"));
-    modal.show();
-    // data-building-id = ${element.building_id}
-    // data-building-name = ${element.buildingName}
-    // data-building-type = ${element.building_type}
-    // data-building-accessable = ${element.isAccessable}
-    // data-building-structured = ${element.is_structured}
-    // data-building-lat = ${element.latitude}
-    // data-building-long = ${element.longitude}
-    // data-building-img-id = ${element.img_id}
-    // data-building-img = ${element.img}
-
-    const building_id = $(this).attr("data-building-id");
-    const building_name = $(this).attr("data-building-name");
-    const building_type = $(this).attr("data-building-type");
-    const building_accessable = $(this).attr("data-building-accessable");
-    const building_structured = $(this).attr("data-building-structured");
-    const building_lat = $(this).attr("data-building-lat");
-    const building_long = $(this).attr("data-building-long");
-    const building_img_id = $(this).attr("data-building-img-id");
-    const building_img = $(this).attr("data-building-img");
-    // alert(building_id);
   });
 }
