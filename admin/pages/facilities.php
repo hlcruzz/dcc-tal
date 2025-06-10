@@ -1,6 +1,6 @@
 <?php
 require_once "./admin/components/checkToken.php";
-if((!isset($_GET['building_id']) || empty($_GET['building_id'])) || (!isset($_GET['building_name']) || empty($_GET['building_name'])) || (!isset($_GET['building_type']) || empty($_GET['building_type']))) {
+if ((!isset($_GET['building_id']) || empty($_GET['building_id'])) || (!isset($_GET['building_name']) || empty($_GET['building_name'])) || (!isset($_GET['building_type']) || empty($_GET['building_type']))) {
     header("Location: /dashboard");
     exit();
 }
@@ -35,7 +35,8 @@ $page = "Buildings / " . $_GET['building_type'] . " / " . $_GET['building_name']
             class="col-span-12 xl:col-span-10 min-h-screen overflow-auto bg-green-100 dark:bg-emerald-900 shadow-md p-5">
             <?php include "./admin/components/header.php" ?>
             <div class="bg-white dark:bg-gray-800 rounded-lg mt-5 overflow-auto">
-                <div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-700 p-5 px-7">
+                <div
+                    class="flex flex-col gap-5 smg:gap-0 sm:flex-row sm:items-center justify-between border-b border-gray-300 dark:border-gray-700 p-5 px-7">
                     <h1 class="font-medium text-md sm:text-xl text-gray-900 dark:text-gray-100"><?php echo $page ?>
                         Table
                     </h1>
