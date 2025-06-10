@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 08, 2025 at 04:27 PM
+-- Generation Time: Jun 10, 2025 at 10:15 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,6 +44,39 @@ INSERT INTO `admin` (`id`, `username`, `password`, `created_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `archive`
+--
+
+CREATE TABLE `archive` (
+  `id` int(11) NOT NULL,
+  `fk_id` int(11) NOT NULL,
+  `tableName` varchar(50) NOT NULL,
+  `pageName` varchar(100) NOT NULL,
+  `action` varchar(50) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `archive`
+--
+
+INSERT INTO `archive` (`id`, `fk_id`, `tableName`, `pageName`, `action`, `created_at`) VALUES
+(1, 1, 'buildings_img', 'Buildings Images', 'Delete', '2025-06-09 06:52:43'),
+(2, 3, 'buildings_img', 'Buildings Images', 'Delete', '2025-06-09 07:15:14'),
+(3, 1, 'buildings', 'Academics Buildings', 'Delete', '2025-06-10 02:02:41'),
+(4, 1, 'buildings', 'Academics Buildings', 'Delete', '2025-06-10 02:07:26'),
+(5, 3, 'buildings_img', 'Buildings Images', 'Delete', '2025-06-10 03:05:48'),
+(6, 2, 'buildings_img', 'Buildings Images', 'Delete', '2025-06-10 03:06:51'),
+(7, 2, 'buildings', 'Academic Buildings', 'Delete', '2025-06-10 03:16:23'),
+(8, 3, 'buildings', 'Academic Buildings', 'Delete', '2025-06-10 06:08:53'),
+(9, 12, 'facilities_img', 'Facilities Images', 'Delete', '2025-06-10 06:51:43'),
+(10, 11, 'facilities_img', 'Facilities Images', 'Delete', '2025-06-10 06:51:49'),
+(11, 5, 'buildings', 'Library Facility', 'Delete', '2025-06-10 07:07:04'),
+(12, 5, 'buildings', 'Library Facility', 'Delete', '2025-06-10 07:07:52');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `buildings`
 --
 
@@ -64,7 +97,10 @@ CREATE TABLE `buildings` (
 --
 
 INSERT INTO `buildings` (`id`, `building_name`, `building_type`, `is_structured`, `created_at`, `isAccessable`, `latitude`, `longitude`, `status`) VALUES
-(1, 'LSAB Building', 'Academics', 1, '2025-06-07 10:46:07', 0, '10.743184314026', '122.97027551439', 1);
+(1, 'LSAB Building', 'Academic', 1, '2025-06-07 10:46:07', 0, '10.743192046688', '122.97027551195', 1),
+(2, 'test', 'Academic', 1, '2025-06-10 02:42:53', 0, '10.7433933', '122.9698434', 1),
+(3, 'tes', 'Academic', 1, '2025-06-10 06:05:33', 0, '10.743398', '122.9697923', 1),
+(4, 'Admin Building', 'Administrative', 1, '2025-06-10 07:14:31', 0, '10.7434269', '122.969785', 1);
 
 -- --------------------------------------------------------
 
@@ -85,7 +121,12 @@ CREATE TABLE `buildings_img` (
 
 INSERT INTO `buildings_img` (`id`, `buildings_id`, `img`, `status`) VALUES
 (1, 1, './assets/img/buildings/lsab2.jpg', 1),
-(2, 1, './assets/img/buildings/lsab1.jpg', 1);
+(2, 1, './assets/img/buildings/lsab1.jpg', 1),
+(3, 1, './assets/img/buildings/IMG_20250602_154109_871.jpg', 0),
+(4, 2, './assets/img/buildings/IMG_20250602_154109_871.jpg', 1),
+(5, 2, './assets/img/buildings/IMG_20250602_154055_107.jpg', 1),
+(6, 3, './assets/img/buildings/IMG_20250602_154055_107.jpg', 1),
+(7, 4, './assets/img/buildings/5d438796-108c-4134-8d3f-2ebb3fb86b34.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -97,8 +138,8 @@ CREATE TABLE `facilities` (
   `id` int(11) NOT NULL,
   `building_id` int(11) DEFAULT NULL,
   `facilityName` varchar(100) NOT NULL,
-  `floorNumber` varchar(25) DEFAULT NULL,
-  `roomNumber` varchar(25) DEFAULT NULL,
+  `floorNumber` varchar(25) NOT NULL,
+  `roomNumber` varchar(25) NOT NULL,
   `description` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `latitude` varchar(255) NOT NULL,
@@ -111,8 +152,9 @@ CREATE TABLE `facilities` (
 --
 
 INSERT INTO `facilities` (`id`, `building_id`, `facilityName`, `floorNumber`, `roomNumber`, `description`, `created_at`, `latitude`, `longitude`, `status`) VALUES
-(1, 1, 'LSAB', '3rd', '311', 'LSAB Room 311 is a dedicated computer laboratory that serves as a learning hub for programming and other BSIS (Bachelor of Science in Information Systems) related courses. Equipped with essential hardware and software for hands-on training, it supports students in developing technical skills in coding, system design, and IT applications. Additionally, the room has hosted several Capstone project defenses, making it a key space for academic presentations and collaborative research in the program', '2025-06-08 00:31:10', '10.743401575996', '122.96982303346', 1),
-(2, 1, 'LSAB', '3rd', '312', 'LSAB Room 312 is a dedicated computer laboratory that serves as a learning hub for programming and other BSIS (Bachelor of Science in Information Systems) related courses. Equipped with essential hardware and software for hands-on training, it supports students in developing technical skills in coding, system design, and IT applications. Additionally, the room has hosted several Capstone project defenses, making it a key space for academic presentations and collaborative research in the program', '2025-06-08 11:44:53', '10.743360089461', '122.96993303927', 1);
+(1, 1, 'LSAB', '3rd', '311', 'LSAB Room 311 is a dedicated computer laboratory that serves as a learning hub for programming and other BSIS (Bachelor of Science in Information Systems) related courses. Equipped with essential hardware and software for hands-on training, it supports students in developing technical skills in coding, system design, and IT applications. Additionally, the room has hosted several Capstone project defenses, making it a key space for academic presentations and collaborative research in the program asdasdasd', '2025-06-08 00:31:10', '10.743401575996', '122.96982303346', 1),
+(2, 1, 'LSAB', '3rd', '312', 'LSAB Room 312 is a dedicated computer laboratory that serves as a learning hub for programming and other BSIS (Bachelor of Science in Information Systems) related courses. Equipped with essential hardware and software for hands-on training, it supports students in developing technical skills in coding, system design, and IT applications. Additionally, the room has hosted several Capstone project defenses, making it a key space for academic presentations and collaborative research in the program', '2025-06-08 11:44:53', '10.743360089461', '122.96993303927', 1),
+(5, 1, 'Library', '2nd', '', 'test', '2025-06-10 03:31:00', '10.7434126', '122.9697626', 0);
 
 -- --------------------------------------------------------
 
@@ -139,7 +181,11 @@ INSERT INTO `facilities_img` (`id`, `facility_id`, `img`, `status`) VALUES
 (5, 2, './assets/img/facilities/312-3.jpg', 1),
 (6, 2, './assets/img/facilities/312-2.jpg', 1),
 (7, 2, './assets/img/facilities/312-1.jpg', 1),
-(8, 2, './assets/img/facilities/lsab-room-312.jpg', 1);
+(8, 2, './assets/img/facilities/lsab-room-312.jpg', 1),
+(9, 5, './assets/img/facilities/IMG_20250602_154055_107.jpg', 1),
+(10, 5, './assets/img/facilities/IMG_20250602_154034_810.jpg', 1),
+(11, 1, './assets/img/buildings/IMG_20250602_153933_623.jpg', 0),
+(12, 1, './assets/img/buildings/IMG_20250602_153917_313.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -169,6 +215,12 @@ CREATE TABLE `visitors` (
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `archive`
+--
+ALTER TABLE `archive`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -215,28 +267,34 @@ ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `archive`
+--
+ALTER TABLE `archive`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT for table `buildings`
 --
 ALTER TABLE `buildings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `buildings_img`
 --
 ALTER TABLE `buildings_img`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `facilities`
 --
 ALTER TABLE `facilities`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `facilities_img`
 --
 ALTER TABLE `facilities_img`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `visitors`
