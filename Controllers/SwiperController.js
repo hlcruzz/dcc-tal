@@ -1,17 +1,25 @@
-export default function initSwiper(){
-    let swiperInstance = null;
+let swiperInstance = null;
+
+export function initSwiper() {
     if (swiperInstance !== null) {
-    swiperInstance.destroy(true, true); // Reset before reinitializing
+        swiperInstance.destroy(true, true);
     }
     swiperInstance = new Swiper(".mySwiper", {
         loop: true,
         pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
+            el: ".swiper-pagination",
+            clickable: true,
         },
         navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
         },
     });
+}
+
+export function stopSwiper() {
+    if (swiperInstance !== null) {
+        swiperInstance.destroy(true, true);
+        swiperInstance = null;
+    }
 }

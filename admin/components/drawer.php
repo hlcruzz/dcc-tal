@@ -76,14 +76,14 @@
                 <ul
                     class="ms-2 max-h-0 overflow-hidden group-focus-within:max-h-96 bg-white dark:bg-gray-800 z-10 transition-all ease-in-out duration-500">
                     <li>
-                        <a href="#"
+                        <a href="/buildings?page=Administrative"
                             class="block p-4 ps-6 hover:bg-green-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 hover:translate-x-2 transition-transform ease-in-out duration-300 text-sm rounded-lg">
                             <i class="fa-solid fa-briefcase me-1"></i> Administrative
                         </a>
                     </li>
                     <li>
-                        <a href="/academic"
-                            class="block p-4 ps-6 <?php echo $page == 'Buildings / Academic' || $page == 'Buildings / Academics / Facilities' ? 'bg-green-500 text-white' : 'text-gray-700 dark:text-gray-300 hover:bg-green-100 dark:hover:bg-gray-800' ?> hover:translate-x-2 transition-transform ease-in-out duration-300 text-sm rounded-lg">
+                        <a href="/buildings?page=Academic"
+                            class="block p-4 ps-6 <?php echo $page == 'Buildings / Academic' || $page == 'Buildings / Academic / ' . $_GET['building_name'] ? 'bg-green-500 text-white' : 'text-gray-700 dark:text-gray-300 hover:bg-green-100 dark:hover:bg-gray-800' ?> hover:translate-x-2 transition-transform ease-in-out duration-300 text-sm rounded-lg">
                             <i class="fa-solid fa-graduation-cap me-1"></i> Academic
                         </a>
                     </li>

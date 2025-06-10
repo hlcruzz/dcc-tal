@@ -5,13 +5,17 @@ import {
   addBuilding,
   fetchAllBuilding,
   deleteBuildingImg,
-  updateBuilding
+  updateBuilding,
+  deleteBuilding
 } from "../../Controllers/BuildingsController.js";
+import initModal from "../../Controllers/ModalController.js";
 import {
   addFacility,
   fetchAllFacility,
+  updateFacility,
+  deleteFacilityImg,
+  deleteFacility
 } from "../../Controllers/FacilitiesController.js";
-import initSwiper from "../../Controllers/SwiperController.js";
 // import { Modal } from "flowbite";
 
 $(document).ready(function () {
@@ -23,6 +27,9 @@ $(document).ready(function () {
   ChartsJs();
   ModalInit();
 });
+const url = new URL(window.location.href);
+const building_id = url.searchParams.get("building_id");
+const buildingName = url.searchParams.get("page");
 function Theme() {
   $("#switch").on("click", function () {
     const icon = $("#iconTheme");
@@ -51,16 +58,18 @@ function Theme() {
   });
 }
 function ModalInit() {
-  new Modal(document.getElementById("add-academics-modal"));
-  new Modal(document.getElementById("edit-academics-modal"));
+  new Modal(document.getElementById("add-building-modal"));
+  new Modal(document.getElementById("edit-building-modal"));
   new Modal(document.getElementById("add-facility-modal"));
+  new Modal(document.getElementById("edit-facility-modal"));
 
 }
 function FetchEvents() {
   
 }
 function DataTables() {
-  fetchAllBuilding("Academics").then((res) => {
+  
+  fetchAllBuilding(buildingName).then((res) => {
     const obj = JSON.parse(res);
     if (!obj.status) {
       alert(obj.message);
@@ -70,13 +79,9 @@ function DataTables() {
     const tbody = $(`${tableSelector} tbody`);
     tbody.empty();
 
-    console.log(obj)
     obj.data.forEach((element) => {
       const content = `
       <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-        <td data-label="#" class="font-medium text-gray-900 dark:text-gray-100 whitespace-nowrap">
-        ${element.building_id}
-        </td>
         <td data-label="Building">${element.building_name}</td>
         <td data-label="Type">${element.building_type}</td>
 
@@ -95,7 +100,7 @@ function DataTables() {
             <label class="inline-flex items-center cursor-pointer">
               <input type="checkbox" value="${
                 element.isAccessable
-              }" class="sr-only peer" ${
+              }" class="isAccessable-btn sr-only peer" ${
         element.isAccessable === 1 ? "checked" : ""
       }>
               <div
@@ -113,7 +118,7 @@ function DataTables() {
         <td data-label="Action">
           <div class="flex flex-wrap gap-2">
               <button 
-              data-modal-target="edit-academics-modal" data-modal-toggle="edit-academics-modal"
+              data-modal-target="edit-building-modal" data-modal-toggle="edit-building-modal"
               data-building-id = "${element.building_id}"
                data-building-name = "${element.building_name}"
                data-building-type = "${element.building_type}"
@@ -123,7 +128,7 @@ function DataTables() {
                data-building-long = "${element.longitude}"
                data-building-img-id = "${element.img_id}"
                data-building-img = "${element.img}"
-              class="edit-academics-btn
+              class="edit-building-btn
               text-md text-white p-2 rounded-lg bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 active:bg-indigo-700 transition-colors duration-200 cursor-pointer">
                 <i class="fa-solid fa-pen"></i>
               </button>
@@ -131,14 +136,17 @@ function DataTables() {
               ${
                 element.is_structured === 1
                   ? ` 
-                <a href="/academic-facilities?id=${element.building_id}&building=${element.building_name}" class="text-md text-white p-2 rounded-lg bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 active:bg-blue-700 transition-colors duration-200 cursor-pointer">
+                <a href="/facilities?building_id=${element.building_id}&building_name=${element.building_name}&building_type=${element.building_type}" class="text-md text-white p-2 rounded-lg bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 active:bg-blue-700 transition-colors duration-200 cursor-pointer">
                   <i class="fa-solid fa-eye"></i>
                 </a>`
                   : ""
               }
              
               
-              <button class="text-md text-white p-2 rounded-lg bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 active:bg-red-700 transition-colors duration-200 cursor-pointer">
+              <button 
+              data-building-id="${element.building_id}"
+              data-building-type="${element.building_type}"
+              class="delete-academics-btn text-md text-white p-2 rounded-lg bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 active:bg-red-700 transition-colors duration-200 cursor-pointer">
                 <i class="fa-solid fa-trash"></i>
               </button>
             </div>
@@ -154,21 +162,20 @@ function DataTables() {
     });
   });
 
-  const url = new URL(window.location.href);
-  const id = url.searchParams.get("id");
-  const buildingName = url.searchParams.get("building");
-  if (id) {
-    fetchAllFacility(id).then((res) => {
+
+  if (building_id) {
+    fetchAllFacility(building_id).then((res) => {
       const obj = JSON.parse(res);
       if (!obj.status) {
         alert(obj.message);
         return;
       }
 
-      const tableSelector = `#table-facility-${id}`;
+      const tableSelector = `#table-facility-${building_id}`;
       const tbody = $(`${tableSelector} tbody`);
       tbody.empty();
 
+      console.log(obj);
       obj.data.forEach((element) => {
         const content = `
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
@@ -186,11 +193,26 @@ function DataTables() {
           <td data-label="Date">${element.facility_date}</td>
           <td data-label="Action">
             <div class="flex flex-wrap gap-2">
-                <button class="edit text-md text-white p-2 rounded-lg bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 active:bg-indigo-700 transition-colors duration-200 cursor-pointer">
+                <button data-modal-target="edit-facility-modal" data-modal-toggle="edit-facility-modal" class="
+                edit-facility-btn text-md text-white p-2 rounded-lg bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 active:bg-indigo-700 transition-colors duration-200 cursor-pointer"
+                  
+                  data-facility-id="${element.facility_id}"
+                  data-facility-name="${element.facilityName}"
+                  data-floor-number="${element.floorNumber}"
+                  data-room-number="${element.roomNumber}"
+                  data-description="${element.description}"
+                  data-latitude="${element.latitude}"
+                  data-longitude="${element.longitude}"
+                  data-img-id="${element.img_id}"
+                  data-img="${element.img}"
+                >
                   <i class="fa-solid fa-pen"></i>
                 </button>
   
-                <button class="text-md text-white p-2 rounded-lg bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 active:bg-red-700 transition-colors duration-200 cursor-pointer">
+                <button class="delete-facility-btn text-md text-white p-2 rounded-lg bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 active:bg-red-700 transition-colors duration-200 cursor-pointer"
+                data-facility-id="${element.facility_id}"
+                data-facility-name="${element.facilityName}"
+                >
                   <i class="fa-solid fa-trash"></i>
                 </button>
               </div>
@@ -270,17 +292,41 @@ function ClickEvents() {
     }
   });
 
+  $("#edit_hasRoomNum").on("click", function () {
+    const isClicked = $(this).is(":checked");
+    const inputField = $("#edit_roomNumber");
+    const inputCont = $("#edit_hasRoomNumCont");
+    if (isClicked) {
+      inputCont.removeClass("hidden");
+            inputField.prop("required", true)
+    } else {
+      inputCont.addClass("hidden");
+      inputField.prop("required", false).val("");;
+
+    }
+  });
+
+
+  $("#edit_hasFloorNum").on("click", function () {
+    const isClicked = $(this).is(":checked");
+    const inputField = $("#edit_floorNumber");
+    const inputCont = $("#edit_hasFloorNumCont");
+    if (isClicked) {
+      inputCont.removeClass("hidden");
+          inputField.prop("required", true)
+    } else {
+      inputCont.addClass("hidden");
+      inputField.prop("required", false).val("");
+    }
+  });
+
   $("#edit_is_structured").on("click", function () {
     const isClicked = $(this).is(":checked");
 
     $(this).val(isClicked ? "1" : "0");
   })
 
-  $(document).on("click", ".edit-academics-btn", function () {
-    const modalName = "edit-academics-modal";
-    const modal = new Modal(document.getElementById(`${modalName}`));
-    modal.show();
-
+  $(document).on("click", ".edit-building-btn", function () {
     const building_id = $(this).attr("data-building-id");
     const building_name = $(this).attr("data-building-name");
     const building_type = $(this).attr("data-building-type");
@@ -291,7 +337,6 @@ function ClickEvents() {
     const building_img_id = $(this).attr("data-building-img-id");
     const building_img = $(this).attr("data-building-img");
 
-    // console.log(building_img)
     $("#edit_building_id").val(building_id);
     $("#edit_building_name").val(building_name);
     $("#edit_building_type").val(building_type);
@@ -305,27 +350,34 @@ function ClickEvents() {
 
     const images = building_img.split(",");
     const imgIDs = building_img_id.split(",");
-    const $swiperWrapper = $(".swiper-wrapper");
+    const $swiperWrapper = $("#edit-academics-swiper");
     $swiperWrapper.empty(); 
     images.forEach((src, index) => {
       const imgID = imgIDs[index];
       const slide = `
         <div class="swiper-slide relative">
           <img src="${src}" class="w-full h-full object-cover" alt="Slide Image">
-          ${imgIDs.length !== 1 ? `<i class="delete-academic-img cursor-pointer fa-solid fa-trash absolute bottom-3 right-3 text-md p-2 px-2.5 rounded-full text-red-500 dark:text-red-700 bg-white dark:bg-gray-800" data-img-id="${imgID}" title="${index}"></i>` : ""}
+          ${imgIDs.length !== 1 ? `<i class="delete-building-img cursor-pointer fa-solid fa-trash absolute bottom-3 right-3 text-md p-2 px-2.5 rounded-full text-red-500 dark:text-red-700 bg-white dark:bg-gray-800" data-img-id="${imgID}" title="${index}"></i>` : ""}
         </div>
       `;
       $swiperWrapper.append(slide);
     });
-    initSwiper();
+    const modal = initModal("edit-facility-modal");
+    if (modal) modal.show()
 
-    $(document).on("click", `[data-modal-hide='${modalName}']`, function() {
-      modal.hide();
-    });
+    
+  });
+  $(document).on("click", `[data-modal-hide='edit-building-modal']`, function() {
+    const modal = initModal("edit-building-modal");
+    if (modal) modal.hide();
+    $(".swiper-wrapper").empty();
   });
 
-  $(document).on("click", ".delete-academic-img", function(){
+  $(document).on("click", ".delete-building-img", function(){
     const id = $(this).attr("data-img-id");
+    if( !confirm("Are you sure you want to delete this image?")) {
+      return;
+    }
     deleteBuildingImg(id).then((res) => {
       const obj = JSON.parse(res);
       if (!obj.status) {
@@ -338,13 +390,154 @@ function ClickEvents() {
       alert("Error: " + error.message, false);
     });
   })
+
+  $(document).on("click", ".delete-academics-btn", function () {
+    const id = $(this).attr("data-building-id");
+    const type = $(this).attr("data-building-type");
+    if( !confirm("Are you sure you want to delete this building?")) {
+      return;
+    }
+    deleteBuilding(id, type).then((res) =>
+      {
+        const obj = JSON.parse(res);
+        if (!obj.status) {
+          alert(obj.message);
+          return;
+        }
+        alert("Building Deleted");
+        location.reload();
+      }
+    ).catch((error) => {
+      alert("Error: " + error.message, false);
+    })
+  });
+
+  $(document).on("click", ".isAccessable-btn", function(){
+    const isChecked = $(this).is(":checked");
+    const inputVal = $(this).val(isChecked ? "1" : "0");
+
+    updateBuildingAccess(inputVal.val(), "Academics").then((res) => {
+      const obj = JSON.parse(res);
+      if (!obj.status) {
+        alert(obj.message);
+        return;
+      }
+      alert("Building Accessibility Updated");
+      location.reload();
+    }).catch((error) => {
+      alert("Error: " + error.message, false);
+    });
+  });
+
+   $(document).on("click", ".edit-facility-btn", function () {
+  
+    const facility_id = $(this).attr("data-facility-id");
+    const facilityName = $(this).attr("data-facility-name");
+    const floorNumber = $(this).attr("data-floor-number");
+    const roomNumber = $(this).attr("data-room-number");
+    const description = $(this).attr("data-description");
+    const latitude = $(this).attr("data-latitude");
+    const longitude = $(this).attr("data-longitude");
+    const img_id = $(this).attr("data-img-id");
+    const img = $(this).attr("data-img");
+
+    $("#edit_facility_id").val(facility_id);
+    $("#edit_facilityName").val(facilityName); 
+    $("#edit_floorNumber").val(floorNumber);
+    $("#edit_roomNumber").val(roomNumber);
+    $("#edit_facility_desc").val(description);
+    $("#edit_latitude_facility").val(latitude);
+    $("#edit_longitude_facility").val(longitude);
+
+    if(roomNumber == ""){
+      $("#edit_hasRoomNumCont").addClass("hidden");
+      $("#edit_hasRoomNum").prop("checked", false);
+      $("#edit_roomNumber").prop("required", false);
+    }else{
+      $("#edit_hasRoomNum").prop("checked", true);
+      $("#edit_hasRoomNumCont").removeClass("hidden");
+      $("#edit_roomNumber").prop("required", true);
+    }
+
+    if(floorNumber == ""){
+      $("#edit_hasFloorNumCont").addClass("hidden");
+      $("#edit_hasFloorNum").prop("checked", false);
+      $("#edit_floorNumber").prop("required", false);
+    }
+    else{
+      $("#edit_hasFloorNum").prop("checked", true);
+      $("#edit_hasFloorNumCont").removeClass("hidden");
+      $("#edit_floorNumber").prop("required", true);
+    }
+    const images = img.split(",");
+    const imgIDs = img_id.split(",");
+    const $swiperWrapper = $(".swiper-wrapper");
+    $swiperWrapper.empty(); 
+    images.forEach((src, index) => {
+      const imgID = imgIDs[index];
+      const slide = `
+        <div class="swiper-slide relative">
+          <img src="${src}" class="w-full h-full object-cover" alt="Slide Image">
+          ${imgIDs.length !== 1 ? `<i class="delete-facility-img cursor-pointer fa-solid fa-trash absolute bottom-3 right-3 text-md p-2 px-2.5 rounded-full text-red-500 dark:text-red-700 bg-white dark:bg-gray-800" data-img-id="${imgID}" title="${index}"></i>` : ""}
+        </div>
+      `;
+      $swiperWrapper.append(slide);
+    });
+    const modal = initModal("edit-facility-modal");
+    if (modal) modal.show();
+   
+  }); 
+
+  $(document).on("click", `[data-modal-hide="edit-facility-modal"]`, function () {
+    const modal = initModal("edit-facility-modal");
+    if (modal) modal.hide();
+    $(".swiper-wrapper").empty();
+  });
+
+  $(document).on("click", ".delete-facility-img", function(){
+    const id = $(this).attr("data-img-id");
+    if( !confirm("Are you sure you want to delete this image?")) {
+      return;
+    }
+    deleteFacilityImg(id).then((res) => {
+      const obj = JSON.parse(res);
+      if (!obj.status) {
+        alert(obj.message);
+        return;
+      }
+      alert("Image Deleted");
+      location.reload();
+    }).catch((error) => {
+      alert("Error: " + error.message, false);
+    });
+  })
+
+  $(document).on("click", ".delete-facility-btn", function () {
+    const id = $(this).attr("data-facility-id");
+    const name = $(this).attr("data-facility-name");
+    if( !confirm("Are you sure you want to delete this building?")) {
+      return;
+    }
+    deleteFacility(id, name).then((res) =>
+      {
+        const obj = JSON.parse(res);
+        if (!obj.status) {
+          alert(obj.message);
+          return;
+        }
+        alert("Facility Deleted");
+        location.reload();
+      }
+    ).catch((error) => {
+      alert("Error: " + error.message, false);
+    })
+  });
 }
 
 function ModalEvents() {
   $("#add-academics-form").submit(function (e) {
     e.preventDefault();
     const formData = new FormData(this);
-    formData.append("building_type", "Academics");
 
     addBuilding(formData)
       .then((res) => {
@@ -366,7 +559,6 @@ function ModalEvents() {
   $("#edit-academics-form").submit(function (e) {
     e.preventDefault();
     const formData = new FormData(this);
-    formData.append("building_type", "Academics");
 
     updateBuilding(formData)
       .then((res) => {
@@ -404,4 +596,24 @@ function ModalEvents() {
         alert("Error: " + error.message, false);
       });
   });
+
+  $("#edit-facility-form").submit(function (e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    updateFacility(formData)
+      .then((res) => {
+        const obj = JSON.parse(res);
+
+        if (!obj.status) {
+          alert(obj.message);
+          return;
+        }
+
+        alert("Facility Updated");
+        location.reload();
+      })
+      .catch((error) => {
+        alert("Error: " + error.message, false);
+      });
+    });
 }

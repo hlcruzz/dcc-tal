@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             if (!move_uploaded_file($temp_name, $pathToFolder)) {
                 die(json_encode([
                     "status" => false,
-                    "message" => "Image Uploade Failed."
+                    "message" => "Image Upload Failed."
                 ]));
             }
 

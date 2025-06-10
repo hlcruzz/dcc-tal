@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
         buildings.isAccessable,
         buildings.latitude,
         buildings.longitude,
+        buildings.status,
         GROUP_CONCAT(buildings_img.img SEPARATOR ',') AS img,
         GROUP_CONCAT(buildings_img.id SEPARATOR ',') AS img_id
         FROM

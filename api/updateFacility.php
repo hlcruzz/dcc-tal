@@ -3,39 +3,42 @@ include "../lib/conn.php";
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
     try {
-        $building_id = (int)$_POST['edit_building_id'];
-        $building_name = trim($_POST['edit_building_name']);
-        $building_type = trim($_POST['edit_building_type']);
-        $is_structured = trim($_POST['edit_is_structured'] ?? 0);
-        $latitude = (float)$_POST['edit_academics_latitude'];
-        $longitude = (float)$_POST['edit_academics_longitude'];
+        $id = (int)$_POST['edit_facility_id'];
+        $facilityName = trim($_POST['edit_facilityName']);
+        $roomNumber = isset($_POST['edit_roomNumber']) ? $_POST['edit_roomNumber'] : "";
+        $floorNumber = isset($_POST['edit_floorNumber']) ? $_POST['edit_floorNumber'] : "";
+        $description = trim($_POST['edit_facility_desc']);
+        $latitude = (float)$_POST['edit_latitude_facility'];
+        $longitude = (float)$_POST['edit_longitude_facility'];
 
-        $query = "UPDATE buildings 
-        SET building_name = :building_name, 
-            building_type = :building_type, 
-            is_structured = :is_structured, 
+        $query = "UPDATE facilities
+        SET facilityName = :facilityName, 
+            roomNumber = :roomNumber, 
+            floorNumber = :floorNumber, 
+            description = :description, 
             latitude = :latitude, 
             longitude = :longitude
-        WHERE id = :id;";
-
+        WHERE id = :id;"; 
         $stmt = $conn->prepare($query);
-        $stmt->bindParam(":building_name", $building_name, PDO::PARAM_STR);
-        $stmt->bindParam(":building_type", $building_type, PDO::PARAM_STR);
-        $stmt->bindParam(":is_structured", $is_structured, PDO::PARAM_INT);
+
+        $stmt->bindParam(":facilityName", $facilityName, PDO::PARAM_STR);
+        $stmt->bindParam(":roomNumber", $roomNumber);
+        $stmt->bindParam(":floorNumber", $floorNumber);
+        $stmt->bindParam(":description", $description, PDO::PARAM_STR);
         $stmt->bindParam(":latitude", $latitude);
         $stmt->bindParam(":longitude", $longitude);
-        $stmt->bindParam(":id", $building_id, PDO::PARAM_INT);
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         $stmt->execute();
 
 
-        if($_FILES['edit_academics_img']['name'][0]) {
+        if($_FILES['edit_facility_img']['name'][0]) {
             $maxSize = (1024 * 1024) * 5;
             $validTypes = ["image/jpg", "image/jpeg", "image/png"];
 
-            foreach ($_FILES['edit_academics_img']['name'] as $key => $file_name) {
-                $temp_name = $_FILES['edit_academics_img']['tmp_name'][$key];
-                $file_type = $_FILES['edit_academics_img']['type'][$key];
-                $file_size = $_FILES['edit_academics_img']['size'][$key];
+            foreach ($_FILES['edit_facility_img']['name'] as $key => $file_name) {
+                $temp_name = $_FILES['edit_facility_img']['tmp_name'][$key];
+                $file_type = $_FILES['edit_facility_img']['type'][$key];
+                $file_size = $_FILES['edit_facility_img']['size'][$key];
                 $pathToDb = "./assets/img/buildings/" . basename($file_name);
                 $pathToFolder = "../assets/img/buildings/" . basename($file_name);
 
@@ -59,9 +62,9 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                     ]));
                 }
 
-                $imgQuery = "INSERT INTO buildings_img (buildings_id, img) VALUES (:buildings_id, :img);";
+                $imgQuery = "INSERT INTO facilities_img (facility_id, img) VALUES (:facility_id, :img);";
                 $stmtImg = $conn->prepare($imgQuery);
-                $stmtImg->bindParam(":buildings_id", $building_id, PDO::PARAM_INT);
+                $stmtImg->bindParam(":facility_id", $id, PDO::PARAM_INT);
                 $stmtImg->bindParam(":img", $pathToDb, PDO::PARAM_STR);
                 $stmtImg->execute();
             }

@@ -1,14 +1,17 @@
 <?php
 require_once "./admin/components/checkToken.php";
-$page = "Buildings / Academics / " . $_GET['building'] . " Facilities";
-$tableName = "Academic - " . $_GET['building'] . " Facilities";
+if((!isset($_GET['building_id']) || empty($_GET['building_id'])) || (!isset($_GET['building_name']) || empty($_GET['building_name'])) || (!isset($_GET['building_type']) || empty($_GET['building_type']))) {
+    header("Location: /dashboard");
+    exit();
+}
+$page = "Buildings / " . $_GET['building_type'] . " / " . $_GET['building_name'];
 ?>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $tableName ?></title>
+    <title><?php echo $page ?></title>
     <?php
     include "./global/links.php";
     include "./admin/components/drawer.php";
@@ -33,7 +36,7 @@ $tableName = "Academic - " . $_GET['building'] . " Facilities";
             <?php include "./admin/components/header.php" ?>
             <div class="bg-white dark:bg-gray-800 rounded-lg mt-5 overflow-auto">
                 <div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-700 p-5 px-7">
-                    <h1 class="font-medium text-md sm:text-xl text-gray-900 dark:text-gray-100"><?php echo $tableName ?>
+                    <h1 class="font-medium text-md sm:text-xl text-gray-900 dark:text-gray-100"><?php echo $page ?>
                         Table
                     </h1>
                     <button type="button" data-modal-target="add-facility-modal" data-modal-toggle="add-facility-modal"
@@ -42,7 +45,7 @@ $tableName = "Academic - " . $_GET['building'] . " Facilities";
                     </button>
                 </div>
                 <div class="p-5 px-7">
-                    <table id="table-facility-<?php echo $_GET['id'] ?>"
+                    <table id="table-facility-<?php echo $_GET['building_id'] ?>"
                         class="table w-full text-gray-900 dark:text-gray-100">
                         <thead>
                             <tr>

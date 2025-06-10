@@ -69,3 +69,41 @@ export function updateBuilding(formData) {
     });
   });
 }
+
+export function deleteBuilding(id, type) {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: "./api/deleteBuilding.php",
+      method: "POST",
+      data: {
+        id: id,
+        type: type,
+      },
+      success: function (response) {
+        resolve(response);
+      },
+      error: function (response) {
+        reject(response);
+      },
+    });
+  });
+}
+
+export function updateBuildingAccess(id, type) {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: "./api/updateBuildingAccess.php",
+      method: "POST",
+      data: {
+        id: id,
+        type: type,
+      },
+      success: function (response) {
+        resolve(response);
+      },
+      error: function (response) {
+        reject(response);
+      },
+    });
+  });
+}
