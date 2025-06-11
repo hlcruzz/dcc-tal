@@ -1,10 +1,7 @@
 <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
 <!-- Swiper CSS -->
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -33,5 +30,6 @@
 <!-- For PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
-<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHSzo9ZR5hlmIuBoA7RdspKtGFKC0ahjI&callback=initMap" async
-    defer></script> -->
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHSzo9ZR5hlmIuBoA7RdspKtGFKC0ahjI&callback=initMap">
+</script>

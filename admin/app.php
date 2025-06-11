@@ -6,7 +6,7 @@
     <title>Admin Login</title>
     <?php include "./global/links.php" ?>
     <script src="./admin/js/auth.js" type="module"></script>
-
+    <script src="./admin/js/maps.js" type="module"></script>
 </head>
 
 <body>

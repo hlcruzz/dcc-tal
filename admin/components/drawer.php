@@ -77,63 +77,64 @@
                     class="ms-2 max-h-0 overflow-hidden group-focus-within:max-h-96 bg-white dark:bg-gray-800 z-10 transition-all ease-in-out duration-500">
                     <li>
                         <a href="/buildings?page=Administrative"
-                            class="block p-4 ps-6 hover:bg-green-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 hover:translate-x-2 transition-transform ease-in-out duration-300 text-sm rounded-lg">
+                            class="block p-4 ps-6 <?php echo $page == 'Buildings / Administrative' || $page == 'Buildings / Administrative / ' . ($_GET['building_name'] ?? null) ? 'bg-green-500 text-white' : 'text-gray-600 hover:bg-green-100 dark:text-gray-300 dark:hover:bg-green-800' ?> hover:translate-x-2 transition-transform ease-in-out duration-300 text-sm rounded-lg">
                             <i class="fa-solid fa-briefcase me-1"></i> Administrative
                         </a>
                     </li>
                     <li>
                         <a href="/buildings?page=Academic"
-                            class="block p-4 ps-6 <?php echo $page == 'Buildings / Academic' || $page == 'Buildings / Academic / ' . $_GET['building_name'] ? 'bg-green-500 text-white' : 'text-gray-700 dark:text-gray-300 hover:bg-green-100 dark:hover:bg-gray-800' ?> hover:translate-x-2 transition-transform ease-in-out duration-300 text-sm rounded-lg">
+                            class="block p-4 ps-6 <?php echo $page == 'Buildings / Academic' || $page == 'Buildings / Academic / ' . ($_GET['building_name'] ?? null) ? 'bg-green-500 text-white' : 'text-gray-600 hover:bg-green-100 dark:text-gray-300 dark:hover:bg-green-800' ?> hover:translate-x-2 transition-transform ease-in-out duration-300 text-sm rounded-lg">
                             <i class="fa-solid fa-graduation-cap me-1"></i> Academic
                         </a>
                     </li>
-                    <li>
-                        <a href="#"
-                            class="block p-4 ps-6 hover:bg-green-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 hover:translate-x-2 transition-transform ease-in-out duration-300 text-sm rounded-lg">
-                            <i class="fa-solid fa-house-user me-1"></i> Residential
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block p-4 ps-6 hover:bg-green-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 hover:translate-x-2 transition-transform ease-in-out duration-300 text-sm rounded-lg">
-                            <i class="fa-solid fa-futbol me-1"></i> Recreational
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block p-4 ps-6 hover:bg-green-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 hover:translate-x-2 transition-transform ease-in-out duration-300 text-sm rounded-lg">
-                            <i class="fa-solid fa-wrench me-1"></i> Utility
-                        </a>
-                    </li>
-                </ul>
             </li>
+            <li>
+                <a href="#"
+                    class="block p-4 ps-6 hover:bg-green-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 hover:translate-x-2 transition-transform ease-in-out duration-300 text-sm rounded-lg">
+                    <i class="fa-solid fa-house-user me-1"></i> Residential
+                </a>
+            </li>
+            <li>
+                <a href="#"
+                    class="block p-4 ps-6 hover:bg-green-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 hover:translate-x-2 transition-transform ease-in-out duration-300 text-sm rounded-lg">
+                    <i class="fa-solid fa-futbol me-1"></i> Recreational
+                </a>
+            </li>
+            <li>
+                <a href="#"
+                    class="block p-4 ps-6 hover:bg-green-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 hover:translate-x-2 transition-transform ease-in-out duration-300 text-sm rounded-lg">
+                    <i class="fa-solid fa-wrench me-1"></i> Utility
+                </a>
+            </li>
+        </ul>
+        </li>
 
-            <!-- Accounts -->
-            <li
-                class="flex rounded-lg transition-all ease-in-out duration-300 text-sm 
+        <!-- Accounts -->
+        <li
+            class="flex rounded-lg transition-all ease-in-out duration-300 text-sm 
                 <?php echo $page == 'Accounts' ? 'bg-green-500 text-white' : 'text-gray-700 dark:text-gray-300 hover:bg-green-100 dark:hover:bg-gray-800' ?>">
-                <a href="#" class="w-full p-4 ps-6">
-                    <i class="fa-solid fa-users me-2"></i>Accounts
-                </a>
-            </li>
+            <a href="#" class="w-full p-4 ps-6">
+                <i class="fa-solid fa-users me-2"></i>Accounts
+            </a>
+        </li>
 
-            <!-- Activity Logs -->
-            <li
-                class="flex rounded-lg transition-all ease-in-out duration-300 text-sm 
+        <!-- Activity Logs -->
+        <li
+            class="flex rounded-lg transition-all ease-in-out duration-300 text-sm 
                 <?php echo $page == 'Activity Logs' ? 'bg-green-500 text-white' : 'text-gray-700 dark:text-gray-300 hover:bg-green-100 dark:hover:bg-gray-800' ?>">
-                <a href="#" class="w-full p-4 ps-6">
-                    <i class="fa-solid fa-arrow-trend-up me-2"></i>Activity Logs
-                </a>
-            </li>
+            <a href="#" class="w-full p-4 ps-6">
+                <i class="fa-solid fa-arrow-trend-up me-2"></i>Activity Logs
+            </a>
+        </li>
 
-            <!-- Archive -->
-            <li
-                class="flex rounded-lg transition-all ease-in-out duration-300 text-sm 
+        <!-- Archive -->
+        <li
+            class="flex rounded-lg transition-all ease-in-out duration-300 text-sm 
                 <?php echo $page == 'Archive' ? 'bg-green-500 text-white' : 'text-gray-700 dark:text-gray-300 hover:bg-green-100 dark:hover:bg-gray-800' ?>">
-                <a href="#" class="w-full p-4 ps-6">
-                    <i class="fa-solid fa-box-archive me-2"></i>Archive
-                </a>
-            </li>
+            <a href="#" class="w-full p-4 ps-6">
+                <i class="fa-solid fa-box-archive me-2"></i>Archive
+            </a>
+        </li>
         </ul>
 
         <!-- Logout -->

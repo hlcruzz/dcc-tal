@@ -89,14 +89,14 @@ export function deleteBuilding(id, type) {
   });
 }
 
-export function updateBuildingAccess(id, type) {
+export function updateBuildingAccess(id,inputVal) {
   return new Promise((resolve, reject) => {
     $.ajax({
       url: "./api/updateBuildingAccess.php",
       method: "POST",
       data: {
         id: id,
-        type: type,
+        inputVal: inputVal,
       },
       success: function (response) {
         resolve(response);

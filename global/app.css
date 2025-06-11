@@ -30,6 +30,7 @@
 
 html {
   scroll-behavior: smooth;
+   overflow: hidden;
 }
 body {
   font-family: "Instrument Sans", sans-serif;
@@ -77,7 +78,6 @@ input[type="number"] {
     margin-right: 1rem;
   }
 
-  /* Special handling for the action column */
   .table td[data-label="Action"] div {
     justify-content: flex-end;
   }

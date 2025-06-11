@@ -330,7 +330,7 @@
             <div
                 class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200 dark:border-gray-700">
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                    Edit <?php echo $_GET['building_name'] ?> Facility
+                    Edit <?php echo $_GET['building_name'] ?? null ?> Facility
                 </h3>
                 <button type="button"
                     class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-white rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center "

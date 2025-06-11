@@ -6,7 +6,8 @@ import {
   fetchAllBuilding,
   deleteBuildingImg,
   updateBuilding,
-  deleteBuilding
+  deleteBuilding,
+  updateBuildingAccess
 } from "../../Controllers/BuildingsController.js";
 import initModal from "../../Controllers/ModalController.js";
 import {
@@ -78,7 +79,6 @@ function DataTables() {
     const tableSelector = "#academics-table";
     const tbody = $(`${tableSelector} tbody`);
     tbody.empty();
-
     obj.data.forEach((element) => {
       const content = `
       <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
@@ -98,7 +98,7 @@ function DataTables() {
         <td data-label="Accessibility">
           <span>
             <label class="inline-flex items-center cursor-pointer">
-              <input type="checkbox" value="${
+              <input type="checkbox" data-id="${element.building_id}" value="${
                 element.isAccessable
               }" class="isAccessable-btn sr-only peer" ${
         element.isAccessable === 1 ? "checked" : ""
@@ -142,11 +142,10 @@ function DataTables() {
                   : ""
               }
              
-              
               <button 
               data-building-id="${element.building_id}"
               data-building-type="${element.building_type}"
-              class="delete-academics-btn text-md text-white p-2 rounded-lg bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 active:bg-red-700 transition-colors duration-200 cursor-pointer">
+              class="delete-building-btn text-md text-white p-2 rounded-lg bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 active:bg-red-700 transition-colors duration-200 cursor-pointer">
                 <i class="fa-solid fa-trash"></i>
               </button>
             </div>
@@ -175,7 +174,6 @@ function DataTables() {
       const tbody = $(`${tableSelector} tbody`);
       tbody.empty();
 
-      console.log(obj);
       obj.data.forEach((element) => {
         const content = `
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
@@ -362,7 +360,7 @@ function ClickEvents() {
       `;
       $swiperWrapper.append(slide);
     });
-    const modal = initModal("edit-facility-modal");
+    const modal = initModal("edit-building-modal");
     if (modal) modal.show()
 
     
@@ -391,7 +389,7 @@ function ClickEvents() {
     });
   })
 
-  $(document).on("click", ".delete-academics-btn", function () {
+  $(document).on("click", ".delete-building-btn", function () {
     const id = $(this).attr("data-building-id");
     const type = $(this).attr("data-building-type");
     if( !confirm("Are you sure you want to delete this building?")) {
@@ -413,17 +411,16 @@ function ClickEvents() {
   });
 
   $(document).on("click", ".isAccessable-btn", function(){
+    const id = $(this).attr("data-id");
     const isChecked = $(this).is(":checked");
     const inputVal = $(this).val(isChecked ? "1" : "0");
 
-    updateBuildingAccess(inputVal.val(), "Academics").then((res) => {
+    updateBuildingAccess(id,inputVal.val()).then((res) => {
       const obj = JSON.parse(res);
       if (!obj.status) {
         alert(obj.message);
         return;
       }
-      alert("Building Accessibility Updated");
-      location.reload();
     }).catch((error) => {
       alert("Error: " + error.message, false);
     });
