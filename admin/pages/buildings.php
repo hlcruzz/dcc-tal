@@ -1,6 +1,6 @@
 <?php
 require_once "./admin/components/checkToken.php";
-if(!isset($_GET['page']) || empty($_GET['page'])) {
+if (!isset($_GET['page']) || empty($_GET['page'])) {
     header("Location: /dashboard");
     exit();
 }
@@ -19,21 +19,7 @@ $page = "Buildings / " . $_GET['page'];
 
     ?>
     <script type="module" src="./admin/js/app.js"></script>
-    <script type="module" src="./admin/js/maps.js"></script>
-    <style>
-    .custom-label {
-        background-color: rgba(0, 0, 0, 0.7);
-        color: white;
-        padding: 4px 8px;
-        border-radius: 6px;
-        font-size: 12px;
-        font-weight: bold;
-        white-space: nowrap;
-        position: absolute;
-        transform: translate(-50%, -100%);
-        pointer-events: none;
-    }
-    </style>
+
 </head>
 
 <body>
@@ -50,9 +36,9 @@ $page = "Buildings / " . $_GET['page'];
         <div
             class="col-span-12 xl:col-span-10 min-h-screen overflow-auto bg-green-100 dark:bg-emerald-900 shadow-md p-5">
             <?php include "./admin/components/header.php" ?>
-
             <div class="bg-white dark:bg-gray-800 rounded-lg mt-5 overflow-auto">
-                <div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-700 p-5 px-7">
+                <div
+                    class="flex flex-col gap-5 smg:gap-0 sm:flex-row sm:items-center justify-between border-b border-gray-300 dark:border-gray-700 p-5 px-7">
                     <h1 class="font-medium text-md sm:text-xl text-gray-900 dark:text-gray-100"><?php echo $page ?>
                         Table
                     </h1>
@@ -61,7 +47,6 @@ $page = "Buildings / " . $_GET['page'];
                         <i class="fa-solid fa-plus me-1"></i>Add
                     </button>
                 </div>
-
                 <div class="p-5 px-7">
                     <table id="academics-table" class="table w-full text-gray-900 dark:text-gray-100">
                         <thead>
@@ -131,7 +116,7 @@ $page = "Buildings / " . $_GET['page'];
                 </div>
             </div>
 
-            <div id="map" class="h-[800px] w-full mt-5"></div>
+
         </div>
     </div>
 </body>
