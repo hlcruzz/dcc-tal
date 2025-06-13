@@ -2,12 +2,9 @@
 include "../lib/conn.php";
 if ($_SERVER['REQUEST_METHOD'] === "GET") {
     try {
-        $type = $_GET['type'];
-
         $query = "SELECT
         buildings.id AS building_id,
         buildings.building_name,
-        buildings.building_type,
         buildings.is_structured,
         DATE_FORMAT(buildings.created_at, '%M %d, %Y %h:%i %p') AS created_at,  
         buildings.isAccessable,
@@ -23,8 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
         ON
         buildings.id = buildings_img.buildings_id
         WHERE
-        buildings.building_type = :building_type
-        AND
         (buildings.status = 1 AND buildings_img.status = 1)
         GROUP BY 
         buildings.id
@@ -33,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
         ;";
 
         $stmt = $conn->prepare($query);
-        $stmt->bindParam(":building_type", $type, PDO::PARAM_STR);
         $stmt->execute();
 
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

@@ -16,14 +16,11 @@ export function addBuilding(formData) {
   });
 }
 
-export function fetchAllBuilding(type) {
+export function fetchAllBuilding() {
   return new Promise((resolve, reject) => {
     $.ajax({
       url: "./api/fetchAllBuilding.php",
       method: "GET",
-      data: {
-        type: type,
-      },
       success: function (response) {
         resolve(response);
       },
@@ -89,7 +86,7 @@ export function deleteBuilding(id, type) {
   });
 }
 
-export function updateBuildingAccess(id,inputVal) {
+export function updateBuildingAccess(id, inputVal) {
   return new Promise((resolve, reject) => {
     $.ajax({
       url: "./api/updateBuildingAccess.php",
@@ -98,6 +95,37 @@ export function updateBuildingAccess(id,inputVal) {
         id: id,
         inputVal: inputVal,
       },
+      success: function (response) {
+        resolve(response);
+      },
+      error: function (response) {
+        reject(response);
+      },
+    });
+  });
+}
+export default function fetchAllBuildingLocation() {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: "./api/fetchAllBuildingLocation.php",
+      method: "GET",
+      success: function (response) {
+        resolve(response);
+      },
+      error: function (response) {
+        reject(response);
+      },
+    });
+  });
+}
+export function addBuildingRoute(formData) {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: "./api/addBuildingRoute.php",
+      method: "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
       success: function (response) {
         resolve(response);
       },

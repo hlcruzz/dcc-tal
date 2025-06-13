@@ -46,34 +46,6 @@
                         class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-green-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone
                         number (09xxxxxxxxx)</label>
                 </div>
-                <div class="flex flex-wrap gap-4 justify-between mt-5">
-
-                    <div class="flex items-center ">
-                        <input id="Student" type="radio" value="Student" name="visitorType" required
-                            class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 ">
-                        <label for="Student" class="ms-2 text-sm font-medium text-gray-600">Student</label>
-                    </div>
-                    <div class="flex items-center ">
-                        <input id="Faculty" type="radio" value="Faculty" name="visitorType" required
-                            class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 ">
-                        <label for="Faculty" class="ms-2 text-sm font-medium text-gray-600">Faculty</label>
-                    </div>
-                    <div class="flex items-center ">
-                        <input id="Staff" type="radio" value="Staff" name="visitorType" required
-                            class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 ">
-                        <label for="Staff" class="ms-2 text-sm font-medium text-gray-600">Staff</label>
-                    </div>
-                    <div class="flex items-center ">
-                        <input id="Alumni" type="radio" value="Alumni" name="visitorType" required
-                            class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 ">
-                        <label for="Alumni" class="ms-2 text-sm font-medium text-gray-600">Alumni</label>
-                    </div>
-                    <div class="flex items-center ">
-                        <input id="Guest" type="radio" value="Guest" name="visitorType" required
-                            class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 ">
-                        <label for="Guest" class="ms-2 text-sm font-medium text-gray-600">Guest</label>
-                    </div>
-                </div>
                 <div class="mt-5">
                     <select id="province" name="province" required
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">

@@ -1,10 +1,6 @@
 <?php
 require_once "./admin/components/checkToken.php";
-if ((!isset($_GET['building_id']) || empty($_GET['building_id'])) || (!isset($_GET['building_name']) || empty($_GET['building_name'])) || (!isset($_GET['building_type']) || empty($_GET['building_type']))) {
-    header("Location: /dashboard");
-    exit();
-}
-$page = "Buildings / " . $_GET['building_type'] . " / " . $_GET['building_name'];
+$page = $_GET['building_name'];
 ?>
 <html lang="en">
 

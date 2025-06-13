@@ -2,7 +2,6 @@
 include "../lib/conn.php";
 if ($_SERVER['REQUEST_METHOD'] === "GET") {
     try {
-        $building_type = $_GET['type'];
         $query = "SELECT 
         building_name,
         latitude,
@@ -12,11 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
         WHERE
         status = 1
         AND
-        (isAccessable = 1 AND building_type = :building_type)
+        isAccessable = 1
         ;";
 
         $stmt = $conn->prepare($query);
-        $stmt->bindParam(":building_type", $building_type);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode([

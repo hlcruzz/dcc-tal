@@ -27,49 +27,13 @@
                 </a>
             </li>
 
-            <!-- Buildings Dropdown -->
-            <li class="relative group">
-                <a class="flex justify-between p-4 ps-6 items-center focus:outline-none group-focus-within:flex rounded-lg transition-all ease-in-out duration-300 text-gray-600 hover:bg-green-100 dark:text-gray-300 dark:hover:bg-green-800 text-sm cursor-pointer"
-                    tabindex="0">
-                    <span><i class="fa-solid fa-building-columns me-2"></i>Buildings</span>
-                    <i
-                        class="fa-solid fa-chevron-right group-focus-within:rotate-90 transition-transform ease-in-out duration-300"></i>
+            <li
+                class="flex rounded-lg transition-all ease-in-out duration-300 <?php echo $page == 'Visitor' ? 'bg-green-500 text-white' : 'text-gray-600 hover:bg-green-100 dark:text-gray-300 dark:hover:bg-green-800' ?> text-sm">
+                <a href="/buildings" class="w-full p-4 ps-6">
+                    <i class="fa-solid fa-building me-2"></i>Buildings
                 </a>
-
-                <ul
-                    class="ms-2 max-h-0 overflow-hidden group-focus-within:max-h-96 bg-white dark:bg-gray-800 z-10 transition-all ease-in-out duration-500">
-                    <li>
-                        <a href="/buildings?page=Administrative"
-                            class="block p-4 ps-6 <?php echo $page == 'Buildings / Administrative' || $page == 'Buildings / Administrative / ' . ($_GET['building_name'] ?? null) ? 'bg-green-500 text-white' : 'text-gray-600 hover:bg-green-100 dark:text-gray-300 dark:hover:bg-green-800' ?> hover:translate-x-2 transition-transform ease-in-out duration-300 text-sm rounded-lg">
-                            <i class="fa-solid fa-briefcase me-1"></i> Administrative
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/buildings?page=Academic"
-                            class="block p-4 ps-6 <?php echo $page == 'Buildings / Academic' || $page == 'Buildings / Academic / ' . ($_GET['building_name'] ?? null) ? 'bg-green-500 text-white' : 'text-gray-600 hover:bg-green-100 dark:text-gray-300 dark:hover:bg-green-800' ?> hover:translate-x-2 transition-transform ease-in-out duration-300 text-sm rounded-lg">
-                            <i class="fa-solid fa-graduation-cap me-1"></i> Academic
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block p-4 ps-6 hover:bg-green-100 text-gray-600 dark:text-gray-300 dark:hover:bg-green-800 hover:translate-x-2 transition-transform ease-in-out duration-300 text-sm rounded-lg">
-                            <i class="fa-solid fa-house-user me-1"></i> Residential
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block p-4 ps-6 hover:bg-green-100 text-gray-600 dark:text-gray-300 dark:hover:bg-green-800 hover:translate-x-2 transition-transform ease-in-out duration-300 text-sm rounded-lg">
-                            <i class="fa-solid fa-futbol me-1"></i> Recreational
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block p-4 ps-6 hover:bg-green-100 text-gray-600 dark:text-gray-300 dark:hover:bg-green-800 hover:translate-x-2 transition-transform ease-in-out duration-300 text-sm rounded-lg">
-                            <i class="fa-solid fa-wrench me-1"></i> Utility
-                        </a>
-                    </li>
-                </ul>
             </li>
+
 
             <!-- Accounts -->
             <li

@@ -7,7 +7,8 @@ import {
   deleteBuildingImg,
   updateBuilding,
   deleteBuilding,
-  updateBuildingAccess
+  updateBuildingAccess,
+  addBuildingRoute,
 } from "../../Controllers/BuildingsController.js";
 import initModal from "../../Controllers/ModalController.js";
 import {
@@ -15,7 +16,7 @@ import {
   fetchAllFacility,
   updateFacility,
   deleteFacilityImg,
-  deleteFacility
+  deleteFacility,
 } from "../../Controllers/FacilitiesController.js";
 // import { Modal } from "flowbite";
 
@@ -30,7 +31,7 @@ $(document).ready(function () {
 });
 const url = new URL(window.location.href);
 const building_id = url.searchParams.get("building_id");
-const buildingName = url.searchParams.get("page");
+const buildingName = url.searchParams.get("building_name");
 function Theme() {
   $("#switch").on("click", function () {
     const icon = $("#iconTheme");
@@ -63,28 +64,25 @@ function ModalInit() {
   new Modal(document.getElementById("edit-building-modal"));
   new Modal(document.getElementById("add-facility-modal"));
   new Modal(document.getElementById("edit-facility-modal"));
-
+  new Modal(document.getElementById("building-route-modal"));
 }
-function FetchEvents() {
-  
-}
+function FetchEvents() {}
 function DataTables() {
-  
-  fetchAllBuilding(buildingName).then((res) => {
+  fetchAllBuilding().then((res) => {
     const obj = JSON.parse(res);
     if (!obj.status) {
       alert(obj.message);
       return;
     }
-    const tableSelector = "#academics-table";
+
+    const tableSelector = "#buildings-table";
     const tbody = $(`${tableSelector} tbody`);
     tbody.empty();
     obj.data.forEach((element) => {
       const content = `
       <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+        <td data-label="#">${element.building_id}</td>
         <td data-label="Building">${element.building_name}</td>
-        <td data-label="Type">${element.building_type}</td>
-
         <td data-label="Date">${element.created_at}</td>
         <td data-label="Structure">
           <span class="${
@@ -97,15 +95,15 @@ function DataTables() {
         </td>
         <td data-label="Accessibility">
           <span>
-            <label class="inline-flex items-center cursor-pointer">
+            <label class="inline-flex items-center cursor-pointer relative">
               <input type="checkbox" data-id="${element.building_id}" value="${
-                element.isAccessable
-              }" class="isAccessable-btn sr-only peer" ${
+        element.isAccessable
+      }" class="isAccessable-btn sr-only peer" ${
         element.isAccessable === 1 ? "checked" : ""
       }>
               <div
-                class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 rounded-full
-                      peer peer-checked:after:translate-x-4 rtl:peer-checked:after:-translate-x-4 peer-checked:after:border-white
+                class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 rounded-full
+                      peer peer-checked:after:translate-x-4  peer-checked:after:border-white
                       after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300
                       after:border after:rounded-full after:w-4 after:h-4 after:transition-all peer-checked:bg-blue-600
                       
@@ -121,7 +119,6 @@ function DataTables() {
               data-modal-target="edit-building-modal" data-modal-toggle="edit-building-modal"
               data-building-id = "${element.building_id}"
                data-building-name = "${element.building_name}"
-               data-building-type = "${element.building_type}"
                data-building-accessable = "${element.isAccessable}"
                data-building-structured = "${element.is_structured}"
                data-building-lat = "${element.latitude}"
@@ -132,11 +129,18 @@ function DataTables() {
               text-md text-white p-2 rounded-lg bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 active:bg-indigo-700 transition-colors duration-200 cursor-pointer">
                 <i class="fa-solid fa-pen"></i>
               </button>
+
+              <button 
+              data-building-id="${element.building_id}"
+              data-modal-target="building-route-modal" data-modal-toggle="building-route-modal"
+              class="open-building-route text-md text-white p-2 rounded-lg bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 active:bg-green-700 transition-colors duration-200 cursor-pointer">
+                <i class="fa-solid fa-map-location-dot"></i>
+              </button>
               
               ${
                 element.is_structured === 1
                   ? ` 
-                <a href="/facilities?building_id=${element.building_id}&building_name=${element.building_name}&building_type=${element.building_type}" class="text-md text-white p-2 rounded-lg bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 active:bg-blue-700 transition-colors duration-200 cursor-pointer">
+                <a href="/facilities?building_id=${element.building_id}&building_name=${element.building_name}" class="text-md text-white p-2 rounded-lg bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 active:bg-blue-700 transition-colors duration-200 cursor-pointer">
                   <i class="fa-solid fa-eye"></i>
                 </a>`
                   : ""
@@ -144,7 +148,6 @@ function DataTables() {
              
               <button 
               data-building-id="${element.building_id}"
-              data-building-type="${element.building_type}"
               class="delete-building-btn text-md text-white p-2 rounded-lg bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 active:bg-red-700 transition-colors duration-200 cursor-pointer">
                 <i class="fa-solid fa-trash"></i>
               </button>
@@ -161,7 +164,6 @@ function DataTables() {
     });
   });
 
-
   if (building_id) {
     fetchAllFacility(building_id).then((res) => {
       const obj = JSON.parse(res);
@@ -173,7 +175,7 @@ function DataTables() {
       const tableSelector = `#table-facility-${building_id}`;
       const tbody = $(`${tableSelector} tbody`);
       tbody.empty();
-
+      console.log(obj);
       obj.data.forEach((element) => {
         const content = `
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
@@ -230,8 +232,7 @@ function DataTables() {
 function ChartsJs() {}
 
 function ClickEvents() {
-
-  $(document).on("click", ".get-location", async function(){
+  $(document).on("click", ".get-location", async function () {
     const data = await getCoordinates();
 
     if (!data.status) {
@@ -247,11 +248,6 @@ function ClickEvents() {
 
     $("#edit_academics_latitude").val(data.lat);
     $("#edit_academics_longitude").val(data.long);
-    
-  })
-  $("#get-location").on("click", async function () {
-    
-    
   });
 
   $("#get-facility").on("click", async function () {
@@ -261,7 +257,6 @@ function ClickEvents() {
       alert(data.message);
       return;
     }
-   
   });
 
   $("#hasRoomNum").on("click", function () {
@@ -296,14 +291,12 @@ function ClickEvents() {
     const inputCont = $("#edit_hasRoomNumCont");
     if (isClicked) {
       inputCont.removeClass("hidden");
-            inputField.prop("required", true)
+      inputField.prop("required", true);
     } else {
       inputCont.addClass("hidden");
-      inputField.prop("required", false).val("");;
-
+      inputField.prop("required", false).val("");
     }
   });
-
 
   $("#edit_hasFloorNum").on("click", function () {
     const isClicked = $(this).is(":checked");
@@ -311,7 +304,7 @@ function ClickEvents() {
     const inputCont = $("#edit_hasFloorNumCont");
     if (isClicked) {
       inputCont.removeClass("hidden");
-          inputField.prop("required", true)
+      inputField.prop("required", true);
     } else {
       inputCont.addClass("hidden");
       inputField.prop("required", false).val("");
@@ -322,12 +315,11 @@ function ClickEvents() {
     const isClicked = $(this).is(":checked");
 
     $(this).val(isClicked ? "1" : "0");
-  })
+  });
 
   $(document).on("click", ".edit-building-btn", function () {
     const building_id = $(this).attr("data-building-id");
     const building_name = $(this).attr("data-building-name");
-    const building_type = $(this).attr("data-building-type");
     const building_accessable = $(this).attr("data-building-accessable");
     const building_structured = $(this).attr("data-building-structured");
     const building_lat = $(this).attr("data-building-lat");
@@ -337,11 +329,10 @@ function ClickEvents() {
 
     $("#edit_building_id").val(building_id);
     $("#edit_building_name").val(building_name);
-    $("#edit_building_type").val(building_type);
     $("#edit_building_accessable").val(building_accessable);
-    $("#edit_is_structured").prop("checked", building_structured === "1").val(
-      building_structured
-    );
+    $("#edit_is_structured")
+      .prop("checked", building_structured === "1")
+      .val(building_structured);
     $("#edit_academics_latitude").val(building_lat);
     $("#edit_academics_longitude").val(building_long);
     $("#edit_building_img_id").val(building_img_id);
@@ -349,54 +340,62 @@ function ClickEvents() {
     const images = building_img.split(",");
     const imgIDs = building_img_id.split(",");
     const $swiperWrapper = $("#edit-academics-swiper");
-    $swiperWrapper.empty(); 
+    $swiperWrapper.empty();
     images.forEach((src, index) => {
       const imgID = imgIDs[index];
       const slide = `
         <div class="swiper-slide relative">
           <img src="${src}" class="w-full h-full object-cover" alt="Slide Image">
-          ${imgIDs.length !== 1 ? `<i class="delete-building-img cursor-pointer fa-solid fa-trash absolute bottom-3 right-3 text-md p-2 px-2.5 rounded-full text-red-500 dark:text-red-700 bg-white dark:bg-gray-800" data-img-id="${imgID}" title="${index}"></i>` : ""}
+          ${
+            imgIDs.length !== 1
+              ? `<i class="delete-building-img cursor-pointer fa-solid fa-trash absolute bottom-3 right-3 text-md p-2 px-2.5 rounded-full text-red-500 dark:text-red-700 bg-white dark:bg-gray-800" data-img-id="${imgID}" title="${index}"></i>`
+              : ""
+          }
         </div>
       `;
       $swiperWrapper.append(slide);
     });
     const modal = initModal("edit-building-modal");
-    if (modal) modal.show()
-
-    
+    if (modal) modal.show();
   });
-  $(document).on("click", `[data-modal-hide='edit-building-modal']`, function() {
-    const modal = initModal("edit-building-modal");
-    if (modal) modal.hide();
-    $(".swiper-wrapper").empty();
-  });
+  $(document).on(
+    "click",
+    `[data-modal-hide='edit-building-modal']`,
+    function () {
+      const modal = initModal("edit-building-modal");
+      if (modal) modal.hide();
+      $(".swiper-wrapper").empty();
+    }
+  );
 
-  $(document).on("click", ".delete-building-img", function(){
+  $(document).on("click", ".delete-building-img", function () {
     const id = $(this).attr("data-img-id");
-    if( !confirm("Are you sure you want to delete this image?")) {
+    if (!confirm("Are you sure you want to delete this image?")) {
       return;
     }
-    deleteBuildingImg(id).then((res) => {
-      const obj = JSON.parse(res);
-      if (!obj.status) {
-        alert(obj.message);
-        return;
-      }
-      alert("Image Deleted");
-      location.reload();
-    }).catch((error) => {
-      alert("Error: " + error.message, false);
-    });
-  })
+    deleteBuildingImg(id)
+      .then((res) => {
+        const obj = JSON.parse(res);
+        if (!obj.status) {
+          alert(obj.message);
+          return;
+        }
+        alert("Image Deleted");
+        location.reload();
+      })
+      .catch((error) => {
+        alert("Error: " + error.message, false);
+      });
+  });
 
   $(document).on("click", ".delete-building-btn", function () {
     const id = $(this).attr("data-building-id");
     const type = $(this).attr("data-building-type");
-    if( !confirm("Are you sure you want to delete this building?")) {
+    if (!confirm("Are you sure you want to delete this building?")) {
       return;
     }
-    deleteBuilding(id, type).then((res) =>
-      {
+    deleteBuilding(id, type)
+      .then((res) => {
         const obj = JSON.parse(res);
         if (!obj.status) {
           alert(obj.message);
@@ -404,30 +403,31 @@ function ClickEvents() {
         }
         alert("Building Deleted");
         location.reload();
-      }
-    ).catch((error) => {
-      alert("Error: " + error.message, false);
-    })
+      })
+      .catch((error) => {
+        alert("Error: " + error.message, false);
+      });
   });
 
-  $(document).on("click", ".isAccessable-btn", function(){
+  $(document).on("click", ".isAccessable-btn", function () {
     const id = $(this).attr("data-id");
     const isChecked = $(this).is(":checked");
     const inputVal = $(this).val(isChecked ? "1" : "0");
 
-    updateBuildingAccess(id,inputVal.val()).then((res) => {
-      const obj = JSON.parse(res);
-      if (!obj.status) {
-        alert(obj.message);
-        return;
-      }
-    }).catch((error) => {
-      alert("Error: " + error.message, false);
-    });
+    updateBuildingAccess(id, inputVal.val())
+      .then((res) => {
+        const obj = JSON.parse(res);
+        if (!obj.status) {
+          alert(obj.message);
+          return;
+        }
+      })
+      .catch((error) => {
+        alert("Error: " + error.message, false);
+      });
   });
 
-   $(document).on("click", ".edit-facility-btn", function () {
-  
+  $(document).on("click", ".edit-facility-btn", function () {
     const facility_id = $(this).attr("data-facility-id");
     const facilityName = $(this).attr("data-facility-name");
     const floorNumber = $(this).attr("data-floor-number");
@@ -439,29 +439,28 @@ function ClickEvents() {
     const img = $(this).attr("data-img");
 
     $("#edit_facility_id").val(facility_id);
-    $("#edit_facilityName").val(facilityName); 
+    $("#edit_facilityName").val(facilityName);
     $("#edit_floorNumber").val(floorNumber);
     $("#edit_roomNumber").val(roomNumber);
     $("#edit_facility_desc").val(description);
     $("#edit_latitude_facility").val(latitude);
     $("#edit_longitude_facility").val(longitude);
 
-    if(roomNumber == ""){
+    if (roomNumber == "") {
       $("#edit_hasRoomNumCont").addClass("hidden");
       $("#edit_hasRoomNum").prop("checked", false);
       $("#edit_roomNumber").prop("required", false);
-    }else{
+    } else {
       $("#edit_hasRoomNum").prop("checked", true);
       $("#edit_hasRoomNumCont").removeClass("hidden");
       $("#edit_roomNumber").prop("required", true);
     }
 
-    if(floorNumber == ""){
+    if (floorNumber == "") {
       $("#edit_hasFloorNumCont").addClass("hidden");
       $("#edit_hasFloorNum").prop("checked", false);
       $("#edit_floorNumber").prop("required", false);
-    }
-    else{
+    } else {
       $("#edit_hasFloorNum").prop("checked", true);
       $("#edit_hasFloorNumCont").removeClass("hidden");
       $("#edit_floorNumber").prop("required", true);
@@ -469,54 +468,63 @@ function ClickEvents() {
     const images = img.split(",");
     const imgIDs = img_id.split(",");
     const $swiperWrapper = $(".swiper-wrapper");
-    $swiperWrapper.empty(); 
+    $swiperWrapper.empty();
     images.forEach((src, index) => {
       const imgID = imgIDs[index];
       const slide = `
         <div class="swiper-slide relative">
           <img src="${src}" class="w-full h-full object-cover" alt="Slide Image">
-          ${imgIDs.length !== 1 ? `<i class="delete-facility-img cursor-pointer fa-solid fa-trash absolute bottom-3 right-3 text-md p-2 px-2.5 rounded-full text-red-500 dark:text-red-700 bg-white dark:bg-gray-800" data-img-id="${imgID}" title="${index}"></i>` : ""}
+          ${
+            imgIDs.length !== 1
+              ? `<i class="delete-facility-img cursor-pointer fa-solid fa-trash absolute bottom-3 right-3 text-md p-2 px-2.5 rounded-full text-red-500 dark:text-red-700 bg-white dark:bg-gray-800" data-img-id="${imgID}" title="${index}"></i>`
+              : ""
+          }
         </div>
       `;
       $swiperWrapper.append(slide);
     });
     const modal = initModal("edit-facility-modal");
     if (modal) modal.show();
-   
-  }); 
-
-  $(document).on("click", `[data-modal-hide="edit-facility-modal"]`, function () {
-    const modal = initModal("edit-facility-modal");
-    if (modal) modal.hide();
-    $(".swiper-wrapper").empty();
   });
 
-  $(document).on("click", ".delete-facility-img", function(){
+  $(document).on(
+    "click",
+    `[data-modal-hide="edit-facility-modal"]`,
+    function () {
+      const modal = initModal("edit-facility-modal");
+      if (modal) modal.hide();
+      $(".swiper-wrapper").empty();
+    }
+  );
+
+  $(document).on("click", ".delete-facility-img", function () {
     const id = $(this).attr("data-img-id");
-    if( !confirm("Are you sure you want to delete this image?")) {
+    if (!confirm("Are you sure you want to delete this image?")) {
       return;
     }
-    deleteFacilityImg(id).then((res) => {
-      const obj = JSON.parse(res);
-      if (!obj.status) {
-        alert(obj.message);
-        return;
-      }
-      alert("Image Deleted");
-      location.reload();
-    }).catch((error) => {
-      alert("Error: " + error.message, false);
-    });
-  })
+    deleteFacilityImg(id)
+      .then((res) => {
+        const obj = JSON.parse(res);
+        if (!obj.status) {
+          alert(obj.message);
+          return;
+        }
+        alert("Image Deleted");
+        location.reload();
+      })
+      .catch((error) => {
+        alert("Error: " + error.message, false);
+      });
+  });
 
   $(document).on("click", ".delete-facility-btn", function () {
     const id = $(this).attr("data-facility-id");
     const name = $(this).attr("data-facility-name");
-    if( !confirm("Are you sure you want to delete this building?")) {
+    if (!confirm("Are you sure you want to delete this building?")) {
       return;
     }
-    deleteFacility(id, name).then((res) =>
-      {
+    deleteFacility(id, name)
+      .then((res) => {
         const obj = JSON.parse(res);
         if (!obj.status) {
           alert(obj.message);
@@ -524,15 +532,70 @@ function ClickEvents() {
         }
         alert("Facility Deleted");
         location.reload();
-      }
-    ).catch((error) => {
-      alert("Error: " + error.message, false);
-    })
+      })
+      .catch((error) => {
+        alert("Error: " + error.message, false);
+      });
+  });
+
+  $(document).on("click", ".add-building-route", function () {
+    const index = $(this).index(".add-building-route");
+    const latitude = $(".building_route_latitude");
+    const longitude = $(".building_route_longitude");
+
+    // Check if ANY latitude or longitude input is not disabled
+    const anyLatitudeEnabled = latitude.filter(":not(:disabled)").length > 0;
+    const anyLongitudeEnabled = longitude.filter(":not(:disabled)").length > 0;
+
+    if (anyLatitudeEnabled || anyLongitudeEnabled) {
+      alert("Please pin the route before adding a new one.");
+      return;
+    }
+    const inputCont = $("#building-route-input-cont");
+    const content = `
+    <div class="flex gap-3 building-route-cont">
+        <input type="number" name="building_route_latitude[]"
+            class="building_route_latitude bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5"
+            placeholder="Enter Latitude" step="any" required>
+        <input type="number" name="building_route_longitude[]"
+            class="building_route_longitude bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5"
+            placeholder="Enter Longitude" step="any" required>
+        <button type="button"
+            class="get-building-route text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium col-span-2 rounded-lg text-lg w-max h-full p-3 px-4">
+            <i class="fa-solid fa-location-crosshairs"></i>
+        </button>
+        <button type="button"
+            class="pin-building-route text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium col-span-2 rounded-lg text-lg w-max h-full p-3 px-4">
+            <i class="fa-solid fa-location-dot"></i>
+        </button>
+    </div>
+    `;
+    inputCont.append(content);
+  });
+
+  $(document).on("click", ".get-building-route", async function () {
+    const index = $(this).index(".get-building-route");
+    const data = await getCoordinates();
+    if (!data.status) {
+      alert(data.message);
+      return;
+    }
+
+    const latitude = data.lat;
+    const longitude = data.long;
+
+    $(`.building_route_latitude`).eq(index).val(latitude);
+    $(`.building_route_longitude`).eq(index).val(longitude);
+  });
+
+  $(document).on("click", ".open-building-route", function () {
+    const id = $(this).attr("data-building-id");
+    $("#building_route_id").val(id);
   });
 }
 
 function ModalEvents() {
-  $("#add-academics-form").submit(function (e) {
+  $("#add-building-form").submit(function (e) {
     e.preventDefault();
     const formData = new FormData(this);
 
@@ -612,5 +675,34 @@ function ModalEvents() {
       .catch((error) => {
         alert("Error: " + error.message, false);
       });
-    });
+  });
+
+  $("#building-route-form").submit(function (e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const latitude = formData.getAll("building_route_latitude[]");
+    const longitude = formData.getAll("building_route_longitude[]");
+
+    if (latitude.length === 0 || longitude.length === 0) {
+      alert("Please add at least one route point.");
+      return;
+    }
+    $(".building_route_latitude").prop("disabled", false);
+    $(".building_route_longitude").prop("disabled", false);
+    addBuildingRoute(formData)
+      .then((res) => {
+        const obj = JSON.parse(res);
+
+        if (!obj.status) {
+          alert(obj.message);
+          return;
+        }
+
+        alert("Building Route Added");
+        location.reload();
+      })
+      .catch((error) => {
+        alert("Error: " + error.message, false);
+      });
+  });
 }

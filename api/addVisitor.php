@@ -26,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 "fname" => $_POST['fname'],
                 "lname" => $_POST['lname'],
                 "phoneNum" => $_POST['phoneNum'],
-                "visitorType" => $_POST['visitorType'],
                 "province" => $_POST['province'],
                 "city" => $_POST['city'],
                 "brgy" => $_POST['brgy'],

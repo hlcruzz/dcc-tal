@@ -38,6 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             "exp" => time() + (3000 * 60), // 30 minutes expiration
             "data" => [
                 "username" => $username,
+                "device_loc" => [
+                    "lat" => 10.742519767967183,
+                    "lng" => 122.96896681429807
+                ],
                 "role" => "admin"
             ]
         ];

@@ -30,11 +30,12 @@
 
 html {
   scroll-behavior: smooth;
-   overflow: hidden;
+  overflow: hidden;
 }
 body {
   font-family: "Instrument Sans", sans-serif;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 input::-webkit-outer-spin-button,
@@ -81,4 +82,9 @@ input[type="number"] {
   .table td[data-label="Action"] div {
     justify-content: flex-end;
   }
+}
+input[type="checkbox"].isAccessable-btn + div {
+  min-width: 36px;
+  min-height: 20px;
+  box-sizing: border-box;
 }

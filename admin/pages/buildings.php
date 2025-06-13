@@ -1,10 +1,6 @@
 <?php
 require_once "./admin/components/checkToken.php";
-if (!isset($_GET['page']) || empty($_GET['page'])) {
-    header("Location: /dashboard");
-    exit();
-}
-$page = "Buildings / " . $_GET['page'];
+$page = "Buildings";
 ?>
 <html lang="en">
 
@@ -19,7 +15,21 @@ $page = "Buildings / " . $_GET['page'];
 
     ?>
     <script type="module" src="./admin/js/app.js"></script>
-
+    <script type="module" src="./admin/js/maps.js"></script>
+    <style>
+        .custom-label {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+            position: absolute;
+            transform: translate(-50%, -100%);
+            pointer-events: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -36,6 +46,7 @@ $page = "Buildings / " . $_GET['page'];
         <div
             class="col-span-12 xl:col-span-10 min-h-screen overflow-auto bg-green-100 dark:bg-emerald-900 shadow-md p-5">
             <?php include "./admin/components/header.php" ?>
+            <div id="map" class="mt-5 h-[800px] w-full"></div>
             <div class="bg-white dark:bg-gray-800 rounded-lg mt-5 overflow-auto">
                 <div
                     class="flex flex-col gap-5 smg:gap-0 sm:flex-row sm:items-center justify-between border-b border-gray-300 dark:border-gray-700 p-5 px-7">
@@ -48,12 +59,12 @@ $page = "Buildings / " . $_GET['page'];
                     </button>
                 </div>
                 <div class="p-5 px-7">
-                    <table id="academics-table" class="table w-full text-gray-900 dark:text-gray-100">
+                    <table id="buildings-table" class="table w-full text-gray-900 dark:text-gray-100">
                         <thead>
                             <tr>
                                 <th>
                                     <span class="flex items-center text-left">
-                                        Building
+                                        #
                                         <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                             width="24" height="24" fill="none" viewBox="0 0 24 24">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -63,7 +74,7 @@ $page = "Buildings / " . $_GET['page'];
                                 </th>
                                 <th>
                                     <span class="flex items-center text-left">
-                                        Type
+                                        Building
                                         <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                             width="24" height="24" fill="none" viewBox="0 0 24 24">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"

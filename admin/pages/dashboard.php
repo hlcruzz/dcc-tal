@@ -33,7 +33,7 @@ $page = "Dashboard";
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-5">
                 <div
                     class="h-full flex items-center gap-5 flex-col lg:flex-row p-3 px-5 bg-white dark:bg-gray-800 rounded-lg">
-                    <i class="fa-solid fa-people-group text-3xl bg-lime-600 p-3 py-4 rounded-full text-white "></i>
+                    <i class="fa-solid fa-people-group text-2xl bg-lime-600 p-3 py-4 rounded-full text-white "></i>
                     <div class="text-lime-600 text-center lg:text-left">
                         <p class="font-medium ">Total Visitor</p>
                         <h1 class="font-extrabold ">538 <i class="fa-solid fa-arrow-trend-up ms-1 "></i>
@@ -43,27 +43,27 @@ $page = "Dashboard";
 
                 <div
                     class="h-full flex items-center gap-5 flex-col lg:flex-row p-3 px-5 bg-white dark:bg-gray-800 rounded-lg">
-                    <i class="fa-solid fa-people-group text-3xl bg-teal-500 p-3 py-4 rounded-full text-white "></i>
+                    <i class="fa-solid fa-building-columns text-2xl bg-teal-500 p-3 rounded-full text-white"></i>
                     <div class="text-teal-500 text-center lg:text-left">
-                        <p class="font-medium ">Total Visitor</p>
+                        <p class="font-medium ">Total Buildings</p>
                         <h1 class="font-extrabold ">538 <i class="fa-solid fa-arrow-trend-up ms-1 "></i>
                         </h1>
                     </div>
                 </div>
                 <div
                     class="h-full flex items-center gap-5 flex-col lg:flex-row p-3 px-5 bg-white dark:bg-gray-800 rounded-lg">
-                    <i class="fa-solid fa-people-group text-3xl bg-emerald-500 p-3 py-4 rounded-full text-white "></i>
+                    <i class="fa-solid fa-house-user text-2xl bg-emerald-500 p-3 rounded-full text-white"></i>
                     <div class="text-emerald-500 text-center lg:text-left">
-                        <p class="font-medium ">Total Visitor</p>
+                        <p class="font-medium ">Total Facilities</p>
                         <h1 class="font-extrabold ">538 <i class="fa-solid fa-arrow-trend-up ms-1 "></i>
                         </h1>
                     </div>
                 </div>
                 <div
                     class="h-full flex items-center gap-5 flex-col lg:flex-row p-3 px-5 bg-white dark:bg-gray-800 rounded-lg">
-                    <i class="fa-solid fa-people-group text-3xl bg-green-500 p-3 py-4 rounded-full text-white "></i>
+                    <i class="fa-solid fa-users text-2xl bg-green-500 p-3 py-4 rounded-full text-white "></i>
                     <div class="text-green-500 text-center lg:text-left">
-                        <p class="font-medium ">Total Visitor</p>
+                        <p class="font-medium ">Total Accounts</p>
                         <h1 class="font-extrabold ">538 <i class="fa-solid fa-arrow-trend-up ms-1 "></i>
                         </h1>
                     </div>
@@ -87,11 +87,6 @@ $page = "Dashboard";
                         <button type="button"
                             class="text-white text-[10px] bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 cursor-pointer font-medium rounded-lg px-4 py-2.5 text-center inline-flex items-center me-2">
                             <i class="fa-solid fa-file-export me-2"></i>
-                            CSV
-                        </button>
-                        <button type="button"
-                            class="text-white text-[10px] bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 cursor-pointer font-medium rounded-lg px-4 py-2.5 text-center inline-flex items-center me-2">
-                            <i class="fa-solid fa-file-export me-2"></i>
                             XLS
                         </button>
                     </div>
@@ -109,15 +104,6 @@ $page = "Dashboard";
                                     </h5>
                                     <p class="text-base font-normal text-gray-500 dark:text-gray-400">Visitors this week
                                     </p>
-                                </div>
-                                <div
-                                    class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 text-center">
-                                    12%
-                                    <svg class="w-3 h-3 ms-1" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                        viewBox="0 0 10 14">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4" />
-                                    </svg>
                                 </div>
                             </div>
                             <div id="area-chart" class="mt-4"></div>
@@ -137,11 +123,6 @@ $page = "Dashboard";
                                     class="text-white text-[10px] bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 cursor-pointer font-medium rounded-lg px-4 py-2.5 text-center inline-flex items-center me-2">
                                     <i class="fa-solid fa-file-export me-2"></i>
                                     PDF
-                                </button>
-                                <button type="button"
-                                    class="text-white text-[10px] bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 cursor-pointer font-medium rounded-lg px-4 py-2.5 text-center inline-flex items-center me-2">
-                                    <i class="fa-solid fa-file-export me-2"></i>
-                                    CSV
                                 </button>
                                 <button type="button"
                                     class="text-white text-[10px] bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 cursor-pointer font-medium rounded-lg px-4 py-2.5 text-center inline-flex items-center me-2">
@@ -170,11 +151,6 @@ $page = "Dashboard";
                             <button type="button"
                                 class="text-white text-[10px] bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 cursor-pointer font-medium rounded-lg px-4 py-2.5 text-center inline-flex items-center me-2">
                                 <i class="fa-solid fa-file-export me-2"></i>
-                                CSV
-                            </button>
-                            <button type="button"
-                                class="text-white text-[10px] bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 cursor-pointer font-medium rounded-lg px-4 py-2.5 text-center inline-flex items-center me-2">
-                                <i class="fa-solid fa-file-export me-2"></i>
                                 XLS
                             </button>
                         </div>
@@ -188,11 +164,6 @@ $page = "Dashboard";
                                 class="text-white text-[10px] bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 cursor-pointer font-medium rounded-lg px-4 py-2.5 text-center inline-flex items-center me-2">
                                 <i class="fa-solid fa-file-export me-2"></i>
                                 PDF
-                            </button>
-                            <button type="button"
-                                class="text-white text-[10px] bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 cursor-pointer font-medium rounded-lg px-4 py-2.5 text-center inline-flex items-center me-2">
-                                <i class="fa-solid fa-file-export me-2"></i>
-                                CSV
                             </button>
                             <button type="button"
                                 class="text-white text-[10px] bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 cursor-pointer font-medium rounded-lg px-4 py-2.5 text-center inline-flex items-center me-2">
@@ -217,50 +188,31 @@ $page = "Dashboard";
     </div>
 
     <script>
-        // Sample data per visitor type, per month
-        const yearlyData = {
-            "2025": {
-                "Student": [50, 60, 70, 80, 60, 75, 85, 90, 100, 95, 85, 80],
-                "Faculty": [10, 15, 12, 18, 20, 22, 19, 21, 20, 18, 16, 14],
-                "Staff": [15, 18, 20, 22, 24, 26, 25, 24, 23, 21, 19, 18],
-                "Alumni": [5, 6, 5, 7, 6, 8, 9, 10, 9, 8, 7, 6],
-                "Guest": [8, 10, 9, 11, 12, 13, 12, 13, 14, 13, 12, 11],
-            },
-            "2024": {
-                "Student": [40, 45, 50, 55, 50, 60, 65, 70, 75, 70, 65, 60],
-                "Faculty": [8, 10, 9, 12, 14, 16, 15, 14, 13, 12, 11, 10],
-                "Staff": [12, 13, 14, 15, 16, 18, 17, 16, 15, 14, 13, 12],
-                "Alumni": [3, 4, 3, 4, 5, 6, 5, 6, 7, 6, 5, 4],
-                "Guest": [6, 7, 6, 8, 9, 10, 9, 10, 11, 10, 9, 8],
-            }
-        };
-
-        const colors = {
-            Student: "#4e73df",
-            Faculty: "#1cc88a",
-            Staff: "#36b9cc",
-            Alumni: "#f6c23e",
-            Guest: "#e74a3b"
+        // Sample data: Total visitors per month for each year
+        const yearlyTotalData = {
+            "2025": [88, 109, 116, 138, 122, 144, 150, 158, 166, 155, 139, 129],
+            "2024": [69, 79, 82, 94, 94, 110, 111, 116, 121, 112, 103, 94]
         };
 
         const currentYear = new Date().getFullYear();
         const start = 2024;
 
+        // Populate year dropdown
         for (let i = currentYear; i >= start; i--) {
             $("#yearFilter").append(`<option value="${i}">${i}</option>`);
         }
 
         const ctx = $("#yearlyVisitor");
 
-        function getDatasetsForYear(year) {
-            const data = yearlyData[year];
-            return Object.keys(data).map(type => ({
-                label: type,
-                data: data[type],
-                backgroundColor: colors[type],
-                borderColor: colors[type],
-                borderWidth: 1,
-            }));
+        function getDatasetForYear(year) {
+            const data = yearlyTotalData[year];
+            return [{
+                label: 'Total Visitors',
+                data: data,
+                backgroundColor: "#4e73df",
+                borderColor: "#4e73df",
+                borderWidth: 1
+            }];
         }
 
         const chart = new Chart(ctx, {
@@ -270,14 +222,14 @@ $page = "Dashboard";
                     "January", "February", "March", "April", "May", "June",
                     "July", "August", "September", "October", "November", "December"
                 ],
-                datasets: getDatasetsForYear(`${currentYear}`)
+                datasets: getDatasetForYear(`${currentYear}`)
             },
             options: {
                 responsive: true,
                 scales: {
                     y: {
                         beginAtZero: true,
-                        stacked: false // not stacked = grouped bars
+                        stacked: false
                     },
                     x: {
                         stacked: false
@@ -293,7 +245,7 @@ $page = "Dashboard";
 
         $("#yearFilter").on("change", function() {
             const selectedYear = $(this).val();
-            chart.data.datasets = getDatasetsForYear(selectedYear);
+            chart.data.datasets = getDatasetForYear(selectedYear);
             chart.update();
         });
 
@@ -344,7 +296,7 @@ $page = "Dashboard";
                 name: "New users",
                 data: [6500, 6418, 6456, 6526, 6356, 6456],
                 color: "#1A56DB",
-            }, ],
+            }],
             xaxis: {
                 categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February',
                     '07 February'
