@@ -444,19 +444,19 @@
     </div>
 </div>
 
-
-<div id="building-route-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+<div id="add-building-route-modal" tabindex="-1" aria-hidden="true"
     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative w-full max-w-4xl max-h-full">
-        <div class="relative bg-white dark:bg-gray-800 rounded-lg shadow-sm ">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+        <div class="relative bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+
             <div
-                class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200 dark:border-gray-700">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                    Building Route
+                class="flex items-center justify-between p-4 md:p-5 border-b border-gray-200 dark:border-gray-600 rounded-t">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                    Add <?php echo $_GET['building_name'] ?? null ?> Route
                 </h3>
                 <button type="button"
-                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-white rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center "
-                    data-modal-hide="building-route-modal">
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-white rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+                    data-modal-hide="add-building-route-modal">
                     <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
@@ -464,54 +464,37 @@
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
-            <form id="building-route-form" class="p-4 md:p-5" method="POST">
-                <div id="building-map" class="w-full h-[500px]"></div>
-                <div class="flex flex-col gap-5 mt-5">
-                    <input type="text" id="building_route_id" name="building_route_id">
-                    <input type="hidden" name="building_route_start_lat" id="building_route_start_lat"
-                        value="<?php echo $decoded->data->device_loc->lat ?>"
-                        class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400"
-                        placeholder="Enter Latitude" step="any" required>
-                    <input type="hidden" name="building_route_start_long" id="building_route_start_long"
-                        value="<?php echo $decoded->data->device_loc->lng ?>"
-                        class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400"
-                        placeholder="Enter Latitude" step="any" required>
 
-                    <div class="flex flex-col gap-3" id="building-route-input-cont">
-                        <div class="flex gap-3 building-route-cont">
-                            <input type="number" name="building_route_latitude[]"
-                                class="building_route_latitude bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5"
-                                placeholder="Enter Latitude" step="any" required>
-                            <input type="number" name="building_route_longitude[]"
-                                class="building_route_longitude bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5"
-                                placeholder="Enter Longitude" step="any" required>
-                            <button type="button"
-                                class="get-building-route text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium col-span-2 rounded-lg text-lg w-max h-full p-3 px-4">
-                                <i class="fa-solid fa-location-crosshairs"></i>
-                            </button>
-                            <button type="button"
-                                class="pin-building-route text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium col-span-2 rounded-lg text-lg w-max h-full p-3 px-4">
-                                <i class="fa-solid fa-location-dot"></i>
-                            </button>
-                        </div>
+            <form id="add-building-route-form" class="p-4 md:p-5" method="POST">
+                <div class="grid gap-4 mb-4 grid-cols-2">
+                    <input type="hidden" id="building_route_id" name="building_route_id"
+                        value="<?php echo $_GET['building_id'] ?? null ?>">
 
-
+                    <div class="col-span-2 sm:col-span-1">
+                        <label for="building_route_lat"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-200">Latitude</label>
+                        <input type="number" name="building_route_lat" id="building_route_lat"
+                            class="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5"
+                            placeholder="Enter Latitude" step="any" required>
                     </div>
-                    <button type="button"
-                        class="add-building-route text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium col-span-2 rounded-lg text-sm w-full p-3">
-                        <i class="fa-solid fa-circle-plus me-1"></i>
-                        Add Route
-                    </button>
-
-                    <div class="flex gap-3">
-                        <button
-                            class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none col-span-2 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 w-max mt-3"
-                            type="button"><i class="fa-solid fa-repeat"></i></button>
-                        <button
-                            class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none col-span-2 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 w-max mt-3"
-                            type="submit">Save Changes</button>
+                    <div class="col-span-2 sm:col-span-1">
+                        <label for="building_route_lng"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-200">Longitude</label>
+                        <input type="number" name="building_route_lng" id="building_route_lng"
+                            class="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5"
+                            placeholder="Enter Longitude" step="any" required>
                     </div>
                 </div>
+
+                <button type="button"
+                    class="get-location text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 w-full">
+                    <i class="fa-solid fa-location-dot me-1"></i> Get Current Location
+                </button>
+
+                <button type="submit"
+                    class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 w-full mt-3">
+                    <i class="fa-solid fa-plus me-1"></i> Add Route
+                </button>
             </form>
         </div>
     </div>

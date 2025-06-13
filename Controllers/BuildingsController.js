@@ -67,14 +67,13 @@ export function updateBuilding(formData) {
   });
 }
 
-export function deleteBuilding(id, type) {
+export function deleteBuilding(id) {
   return new Promise((resolve, reject) => {
     $.ajax({
       url: "./api/deleteBuilding.php",
       method: "POST",
       data: {
         id: id,
-        type: type,
       },
       success: function (response) {
         resolve(response);
@@ -104,7 +103,7 @@ export function updateBuildingAccess(id, inputVal) {
     });
   });
 }
-export default function fetchAllBuildingLocation() {
+export function fetchAllBuildingLocation() {
   return new Promise((resolve, reject) => {
     $.ajax({
       url: "./api/fetchAllBuildingLocation.php",
@@ -135,3 +134,40 @@ export function addBuildingRoute(formData) {
     });
   });
 }
+
+export function fetchBuildingRoutes(id) {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: "./api/fetchBuildingRoutes.php",
+      method: "GET",
+      data: {
+        id: id
+      },
+      success: function (response) {
+        resolve(response);
+      },
+      error: function (response) {
+        reject(response);
+      },
+    });
+  });
+}
+
+export function fetchBuildingSearch(value) {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: "./api/fetchBuildingSearch.php",
+      method: "GET",
+      data: {
+        value: value
+      },
+      success: function (response) {
+        resolve(response);
+      },
+      error: function (response) {
+        reject(response);
+      },
+    });
+  });
+}
+

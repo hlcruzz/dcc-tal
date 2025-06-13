@@ -1,4 +1,4 @@
-import fetchAllBuildingLocation from "../../Controllers/BuildingsController.js";
+// import fetchAllBuildingLocation from "../../Controllers/BuildingsController.js";
 function initMap() {
   const location = { lat: 10.742533745423202, lng: 122.96895244321148 };
 
@@ -8,6 +8,7 @@ function initMap() {
     mapTypeId: "satellite", // Set default to satellite
     mapTypeControl: false, // Disable the Map/Satellite button
     fullscreenControl: false,
+    streetViewControl: false
   });
 
   // Add a marker (pin) at the location

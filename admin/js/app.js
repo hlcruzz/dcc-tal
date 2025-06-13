@@ -9,6 +9,7 @@ import {
   deleteBuilding,
   updateBuildingAccess,
   addBuildingRoute,
+  fetchBuildingRoutes
 } from "../../Controllers/BuildingsController.js";
 import initModal from "../../Controllers/ModalController.js";
 import {
@@ -64,7 +65,7 @@ function ModalInit() {
   new Modal(document.getElementById("edit-building-modal"));
   new Modal(document.getElementById("add-facility-modal"));
   new Modal(document.getElementById("edit-facility-modal"));
-  new Modal(document.getElementById("building-route-modal"));
+
 }
 function FetchEvents() {}
 function DataTables() {
@@ -130,12 +131,9 @@ function DataTables() {
                 <i class="fa-solid fa-pen"></i>
               </button>
 
-              <button 
-              data-building-id="${element.building_id}"
-              data-modal-target="building-route-modal" data-modal-toggle="building-route-modal"
-              class="open-building-route text-md text-white p-2 rounded-lg bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 active:bg-green-700 transition-colors duration-200 cursor-pointer">
-                <i class="fa-solid fa-map-location-dot"></i>
-              </button>
+              <a href="/building-route?building_id=${element.building_id}&building_name=${element.building_name}" class="text-md text-white p-2 rounded-lg bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 active:bg-green-700 transition-colors duration-200 cursor-pointer">
+                  <i class="fa-solid fa-map-location-dot"></i>
+              </a>
               
               ${
                 element.is_structured === 1
@@ -175,7 +173,6 @@ function DataTables() {
       const tableSelector = `#table-facility-${building_id}`;
       const tbody = $(`${tableSelector} tbody`);
       tbody.empty();
-      console.log(obj);
       obj.data.forEach((element) => {
         const content = `
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
@@ -228,6 +225,54 @@ function DataTables() {
       });
     });
   }
+  if(building_id){
+    fetchBuildingRoutes(building_id).then((res) => {
+      const obj = JSON.parse(res);
+      if (!obj.status) {
+        alert(obj.message);
+        return;
+      }
+      console.log(obj);
+      const tableSelector = "#building-route-table";
+      const tbody = $(`${tableSelector} tbody`);
+      tbody.empty();
+      obj.data.forEach((element) => {
+        const content = `
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+          <td data-label="#">${element.id}</td>
+          <td data-label="Building ID">${element.building_id}</td>
+          <td data-label="Latitude">${element.latitude}</td>
+          <td data-label="Longitude">${element.longitude}</td>
+          <td data-label="Date">${element.created_at}</td>
+          <td data-label="Action">
+            <div class="flex flex-wrap gap-2">
+                <button 
+                data-modal-target="edit-building-route-modal" data-modal-toggle="edit-building-route-modal"
+                data-route-id = "${element.id}"
+                 data-route-lat = "${element.latitude}"
+                 data-route-lng = "${element.longitude}"
+                class="edit-building-route-btn
+                text-md text-white p-2 rounded-lg bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 active:bg-indigo-700 transition-colors duration-200 cursor-pointer">
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+                <button 
+                data-building-id="${element.building_id}"
+                class="delete-building-route-btn text-md text-white p-2 rounded-lg bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 active:bg-red-700 transition-colors duration-200 cursor-pointer">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+          </td>
+        </tr>
+      `;
+        tbody.append(content);
+      });
+
+      SimpleDataTable(tableSelector, {
+        hiddenColumns: [5],
+        filename: `${buildingName} - Routes`,
+      });
+    });
+  }
 }
 function ChartsJs() {}
 
@@ -248,6 +293,9 @@ function ClickEvents() {
 
     $("#edit_academics_latitude").val(data.lat);
     $("#edit_academics_longitude").val(data.long);
+
+    $("#building_route_lat").val(data.lat);
+    $("#building_route_lng").val(data.long);
   });
 
   $("#get-facility").on("click", async function () {
@@ -390,11 +438,10 @@ function ClickEvents() {
 
   $(document).on("click", ".delete-building-btn", function () {
     const id = $(this).attr("data-building-id");
-    const type = $(this).attr("data-building-type");
     if (!confirm("Are you sure you want to delete this building?")) {
       return;
     }
-    deleteBuilding(id, type)
+    deleteBuilding(id)
       .then((res) => {
         const obj = JSON.parse(res);
         if (!obj.status) {
@@ -677,18 +724,10 @@ function ModalEvents() {
       });
   });
 
-  $("#building-route-form").submit(function (e) {
+  $("#add-building-route-form").submit(function (e) {
     e.preventDefault();
     const formData = new FormData(this);
-    const latitude = formData.getAll("building_route_latitude[]");
-    const longitude = formData.getAll("building_route_longitude[]");
 
-    if (latitude.length === 0 || longitude.length === 0) {
-      alert("Please add at least one route point.");
-      return;
-    }
-    $(".building_route_latitude").prop("disabled", false);
-    $(".building_route_longitude").prop("disabled", false);
     addBuildingRoute(formData)
       .then((res) => {
         const obj = JSON.parse(res);

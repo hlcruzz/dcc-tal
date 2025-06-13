@@ -1,35 +1,48 @@
+const swiperInstances = new Map();
+
 export default function initModal(modalId, userOptions = {}, userInstanceOptions = {}) {
     const $targetEl = document.getElementById(modalId);
     if (!$targetEl) {
         console.warn(`Modal with ID "${modalId}" not found.`);
         return null;
     }
-    let swiperInstance = null;
+
     const defaultOptions = {
         backdrop: 'dynamic',
         backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
         closable: true,
+
+        // 🔴 When modal hides
         onHide: () => {
-            // if (swiperInstance !== null) {
-            //     swiperInstance.destroy(true, true);
-            //     swiperInstance = null;
-            // }
-            // $(".swiper-wrapper").empty();
+            const instance = swiperInstances.get(modalId);
+            if (instance) {
+                instance.destroy(true, true);
+                swiperInstances.delete(modalId);
+            }
+
+            $targetEl.querySelector(".swiper-wrapper")?.replaceChildren(); // clear all images
         },
+
+        // 🟢 When modal shows
         onShow: () => {
-            swiperInstance = new Swiper(".mySwiper", {
+            const swiper = new Swiper(`#${modalId} .mySwiper`, {
                 loop: false,
                 pagination: {
-                    el: ".swiper-pagination",
+                    el: `#${modalId} .swiper-pagination`,
                     clickable: true,
                 },
                 navigation: {
-                    nextEl: ".swiper-button-next",
-                    prevEl: ".swiper-button-prev",
+                    nextEl: `#${modalId} .swiper-button-next`,
+                    prevEl: `#${modalId} .swiper-button-prev`,
                 },
             });
+
+            swiperInstances.set(modalId, swiper);
         },
-        onToggle: () => console.log(`Modal "${modalId}" has been toggled`)
+
+        onToggle: () => {
+            console.log(`Modal "${modalId}" has been toggled`);
+        }
     };
 
     const defaultInstanceOptions = {
@@ -40,5 +53,12 @@ export default function initModal(modalId, userOptions = {}, userInstanceOptions
     const options = { ...defaultOptions, ...userOptions };
     const instanceOptions = { ...defaultInstanceOptions, ...userInstanceOptions };
 
-    return new Modal($targetEl, options, instanceOptions);
+    const modalInstance = new Modal($targetEl, options, instanceOptions);
+
+    // ✅ Auto-bind close buttons using data-modal-hide
+    $targetEl.querySelectorAll('[data-modal-hide]').forEach(button => {
+        button.addEventListener('click', () => modalInstance.hide());
+    });
+
+    return modalInstance;
 }

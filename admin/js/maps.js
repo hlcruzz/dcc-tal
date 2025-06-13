@@ -1,4 +1,4 @@
-import fetchAllBuildingLocation from "../../Controllers/BuildingsController.js";
+import {fetchAllBuildingLocation, fetchBuildingRoutes} from "../../Controllers/BuildingsController.js";
 function initMap(locations) {
   const map = new google.maps.Map(document.getElementById("map"), {
     zoom: 18,
@@ -103,111 +103,59 @@ fetchAllBuildingLocation()
     console.error("Error:", error);
   });
 
-let customPath = []; // Define globally to store all clicked points
+const url = new URL(window.location.href);
+const building_id = url.searchParams.get("building_id");
+function initBuildingRouteMap(pathCoordinates) {
+        // Center the map on the first point
+        const map = new google.maps.Map(document.getElementById("building-route-map"), {
+            zoom: 18,
+            center: pathCoordinates[0],
+            mapTypeId: "satellite",
+        });
 
-function drawRoute(map) {
-  const routeLine = new google.maps.Polyline({
-    path: customPath,
-    geodesic: true,
-    strokeColor: "#FF0000",
-    strokeOpacity: 1.0,
-    strokeWeight: 4,
-  });
+        // Add the polyline to the map
+        const pathLine = new google.maps.Polyline({
+            path: pathCoordinates,
+            geodesic: true,
+            strokeColor: "#FF0000",
+            strokeOpacity: 1.0,
+            strokeWeight: 5,
+        });
 
-  routeLine.setMap(map);
+        pathLine.setMap(map);
+
+        // Add start marker
+        new google.maps.Marker({
+            position: pathCoordinates[0],
+            map: map,
+            label: "S",
+        });
+
+        // Add end marker
+        new google.maps.Marker({
+            position: pathCoordinates[pathCoordinates.length - 1],
+            map: map,
+            label: "E",
+        });
+    }
+if (building_id) {
+  fetchBuildingRoutes(building_id)
+    .then((response) => {
+      const data = JSON.parse(response);
+      if (!data.status) {
+        alert(data.message);
+        return;
+      }
+      console.log(data);
+      const locations = data.data.map((route) => ({
+        lat: parseFloat(route.latitude),
+        lng: parseFloat(route.longitude),
+        label: route.route_name,
+      }));
+
+      initBuildingRouteMap(locations);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }
-
-$(document).on("click", ".pin-building-route", function () {
-  const index = $(this).index(".pin-building-route");
-  const latitude = parseFloat($(`.building_route_latitude`).eq(index).val());
-  const longitude = parseFloat($(`.building_route_longitude`).eq(index).val());
-
-  if (isNaN(latitude) || isNaN(longitude)) {
-    alert("Please enter valid latitude and longitude.");
-    return;
-  }
-  $(this).hide();
-  $(".building-route-cont").eq(index).hide();
-  $(`.building_route_latitude`).eq(index).prop("disabled", true);
-  $(`.building_route_longitude`).eq(index).prop("disabled", true);
-  const location = { lat: latitude, lng: longitude };
-  customPath.push(location); // Add to the path
-
-  const map = new google.maps.Map(document.getElementById("building-map"), {
-    zoom: 18,
-    center: location,
-    mapTypeId: "satellite",
-    mapTypeControl: false,
-    fullscreenControl: false,
-  });
-
-  // Draw the polyline with the updated path
-  drawRoute(map);
-
-  // Add a marker for the newly added location
-  new google.maps.Marker({
-    position: location,
-    map: map,
-  });
-
-  // Optional: Start and End labels
-  if (customPath.length === 1) {
-    const startInfo = new google.maps.InfoWindow({
-      content: "<strong>Start</strong>",
-    });
-    const startMarker = new google.maps.Marker({
-      position: {
-        lat: $("#building_route_start_lat").val(),
-        lng: $("#building_route_start_long").val(),
-      },
-      map: map,
-      label: "S",
-      title: "Start",
-    });
-    startMarker.addListener("click", () => startInfo.open(map, startMarker));
-  } else if (customPath.length >= 2) {
-    const endInfo = new google.maps.InfoWindow({
-      content: "<strong>End</strong>",
-    });
-    const endMarker = new google.maps.Marker({
-      position: customPath[customPath.length - 1],
-      map: map,
-      label: "E",
-      title: "End",
-    });
-    endMarker.addListener("click", () => endInfo.open(map, endMarker));
-  }
-});
-
-function buildingMap() {
-  const latitude = parseFloat($("#building_route_start_lat").val());
-  const longitude = parseFloat($("#building_route_start_long").val());
-
-  if (!isNaN(latitude) && !isNaN(longitude)) {
-    const location = { lat: latitude, lng: longitude };
-    customPath = [location]; // Initialize with starting location
-
-    const map = new google.maps.Map(document.getElementById("building-map"), {
-      zoom: 18,
-      center: location,
-      mapTypeId: "satellite",
-      mapTypeControl: false,
-      fullscreenControl: false,
-    });
-
-    drawRoute(map);
-
-    // Start marker
-    const startInfo = new google.maps.InfoWindow({
-      content: "<strong>Start</strong>",
-    });
-    const startMarker = new google.maps.Marker({
-      position: location,
-      map: map,
-      label: "S",
-      title: "Start",
-    });
-    startMarker.addListener("click", () => startInfo.open(map, startMarker));
-  }
-}
-buildingMap();
