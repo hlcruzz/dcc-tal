@@ -269,7 +269,7 @@
                         <div class="mt-3 hidden" id="hasFloorNumCont">
                             <select id="floorNumber" name="floorNumber"
                                 class="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5">
-                                <option selected hidden>Choose an option</option>
+                                <option value="" selected hidden>Choose an option</option>
                                 <option value="1st">1st (Ground Floor)</option>
                                 <option value="2nd">2nd Floor</option>
                                 <option value="3rd">3rd Floor</option>
@@ -400,7 +400,7 @@
                         <div class="mt-3 hidden" id="edit_hasFloorNumCont">
                             <select id="edit_floorNumber" name="edit_floorNumber"
                                 class="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5">
-                                <option selected hidden>Choose an option</option>
+                                <option value="" selected hidden>Choose an option</option>
                                 <option value="1st">1st (Ground Floor)</option>
                                 <option value="2nd">2nd Floor</option>
                                 <option value="3rd">3rd Floor</option>
