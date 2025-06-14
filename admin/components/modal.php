@@ -29,7 +29,7 @@
                         <input
                             class="block w-full text-sm text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700"
                             aria-describedby="file_input_help" id="building_img" name="building_img[]" type="file"
-                            multiple accept=".gif, .jpg, .png, .jpeg" required>
+                            multiple accept=".jpg, .png, .jpeg" required>
                         <p class="mt-1 text-[10px] text-gray-500 dark:text-gray-400">PNG, JPG, JPEG (MAX PER FILE :
                             5MB).</p>
                     </div>
@@ -135,7 +135,7 @@
                         <input
                             class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
                             aria-describedby="edit_building_img" id="edit_building_img" name="edit_building_img[]"
-                            type="file" multiple accept=".gif, .jpg, .png, .jpeg">
+                            type="file" multiple accept=".jpg, .png, .jpeg">
                         <p class="mt-1 text-[10px] text-gray-500 dark:text-gray-400">PNG, JPG, JPEG (MAX PER FILE :
                             5MB).</p>
 
@@ -228,7 +228,7 @@
                         <input
                             class="block w-full text-sm text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700"
                             aria-describedby="facility_img" id="facility_img" name="facility_img[]" type="file" multiple
-                            accept=".gif, .jpg, .png, .jpeg" required>
+                            accept=".jpg, .png, .jpeg" required>
                         <p class="mt-1 text-[10px] text-gray-500 dark:text-gray-400">PNG, JPG, JPEG (MAX PER FILE :
                             5MB).</p>
                     </div>
@@ -359,7 +359,7 @@
                         <input
                             class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
                             aria-describedby="edit_facility_img" id="edit_facility_img" name="edit_facility_img[]"
-                            type="file" multiple accept=".gif, .jpg, .png, .jpeg">
+                            type="file" multiple accept=".jpg, .png, .jpeg">
                         <p class="mt-1 text-[10px] text-gray-500 dark:text-gray-400">PNG, JPG, JPEG (MAX PER FILE :
                             5MB).</p>
 
@@ -469,7 +469,17 @@
                 <div class="grid gap-4 mb-4 grid-cols-2">
                     <input type="hidden" id="building_route_id" name="building_route_id"
                         value="<?php echo $_GET['building_id'] ?? null ?>">
+                    <div class="col-span-2">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Upload
+                            Image</label>
+                        <input
+                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
+                            aria-describedby="edit_facility_img" id="building_route_img" name="building_route_img"
+                            type="file" accept=".jpg, .png, .jpeg" required>
+                        <p class="mt-1 text-[10px] text-gray-500 dark:text-gray-400">PNG, JPG, JPEG (MAX PER FILE :
+                            5MB).</p>
 
+                    </div>
                     <div class="col-span-2 sm:col-span-1">
                         <label for="building_route_lat"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-200">Latitude</label>

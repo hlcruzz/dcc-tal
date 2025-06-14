@@ -8,6 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
         building_id,
         latitude,
         longitude,
+        img,
         DATE_FORMAT(created_at, '%M %d, %Y %h:%i %p') AS created_at  
         FROM building_route
         WHERE building_id = :building_id

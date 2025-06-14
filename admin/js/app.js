@@ -9,7 +9,7 @@ import {
   deleteBuilding,
   updateBuildingAccess,
   addBuildingRoute,
-  fetchBuildingRoutes
+  fetchBuildingRoutes,
 } from "../../Controllers/BuildingsController.js";
 import initModal from "../../Controllers/ModalController.js";
 import {
@@ -65,7 +65,6 @@ function ModalInit() {
   new Modal(document.getElementById("edit-building-modal"));
   new Modal(document.getElementById("add-facility-modal"));
   new Modal(document.getElementById("edit-facility-modal"));
-
 }
 function FetchEvents() {}
 function DataTables() {
@@ -131,7 +130,11 @@ function DataTables() {
                 <i class="fa-solid fa-pen"></i>
               </button>
 
-              <a href="/building-route?building_id=${element.building_id}&building_name=${element.building_name}" class="text-md text-white p-2 rounded-lg bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 active:bg-green-700 transition-colors duration-200 cursor-pointer">
+              <a href="/building-route?building_id=${
+                element.building_id
+              }&building_name=${
+        element.building_name
+      }" class="text-md text-white p-2 rounded-lg bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 active:bg-green-700 transition-colors duration-200 cursor-pointer">
                   <i class="fa-solid fa-map-location-dot"></i>
               </a>
               
@@ -225,7 +228,7 @@ function DataTables() {
       });
     });
   }
-  if(building_id){
+  if (building_id) {
     fetchBuildingRoutes(building_id).then((res) => {
       const obj = JSON.parse(res);
       if (!obj.status) {
@@ -241,6 +244,9 @@ function DataTables() {
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
           <td data-label="#">${element.id}</td>
           <td data-label="Building ID">${element.building_id}</td>
+          <td data-label="Img">
+            <img src="${element.img}" alt="${element.building_id}" class="w-12 h-12 object-cover rounded-md">
+          </td>
           <td data-label="Latitude">${element.latitude}</td>
           <td data-label="Longitude">${element.longitude}</td>
           <td data-label="Date">${element.created_at}</td>
@@ -268,7 +274,7 @@ function DataTables() {
       });
 
       SimpleDataTable(tableSelector, {
-        hiddenColumns: [5],
+        hiddenColumns: [2, 6],
         filename: `${buildingName} - Routes`,
       });
     });
@@ -741,7 +747,7 @@ function ModalEvents() {
         location.reload();
       })
       .catch((error) => {
-        alert("Error: " + error.message, false);
+        console.log("Error: " + error.message, false);
       });
   });
 }

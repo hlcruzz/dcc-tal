@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 13, 2025 at 10:33 AM
+-- Generation Time: Jun 14, 2025 at 12:55 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -156,6 +156,7 @@ CREATE TABLE `building_route` (
   `building_id` int(11) DEFAULT NULL,
   `latitude` varchar(255) NOT NULL,
   `longitude` varchar(255) NOT NULL,
+  `img` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -163,13 +164,16 @@ CREATE TABLE `building_route` (
 -- Dumping data for table `building_route`
 --
 
-INSERT INTO `building_route` (`id`, `building_id`, `latitude`, `longitude`, `created_at`) VALUES
-(1, 1, '10.742538146367577', '122.96894043524786', '2025-06-13 01:57:48'),
-(2, 1, '10.742437755168194', '122.96923707680624', '2025-06-13 01:58:33'),
-(3, 1, '10.742752917263102', '122.96936041739556', '2025-06-13 02:42:36'),
-(4, 1, '10.742792089750678', '122.96942261658232', '2025-06-13 02:43:08'),
-(5, 1, '10.74345276349377', '122.96968114509771', '2025-06-13 02:44:34'),
-(6, 1, '10.74321032550784', '122.9702906770871', '2025-06-13 02:45:06');
+INSERT INTO `building_route` (`id`, `building_id`, `latitude`, `longitude`, `img`, `created_at`) VALUES
+(1, 1, '10.742538146367577', '122.96894043524786', './assets/img/buildings/chmsu-teb.jpg', '2025-06-13 01:57:48'),
+(2, 1, '10.742437755168194', '122.96923707680624', './assets/img/buildings/chmsu-teb.jpg', '2025-06-13 01:58:33'),
+(3, 1, '10.742752917263102', '122.96936041739556', './assets/img/buildings/chmsu-teb.jpg', '2025-06-13 02:42:36'),
+(4, 1, '10.742792089750678', '122.96942261658232', './assets/img/buildings/chmsu-teb.jpg', '2025-06-13 02:43:08'),
+(5, 1, '10.74345276349377', '122.96968114509771', './assets/img/buildings/chmsu-teb.jpg', '2025-06-13 02:44:34'),
+(6, 1, '10.74321032550784', '122.9702906770871', './assets/img/buildings/chmsu-teb.jpg', '2025-06-13 02:45:06'),
+(7, 7, '10.742537372680758', '122.96894483423843', './assets/img/building-routes/chmsu-tal.jpg', '2025-06-14 10:33:13'),
+(8, 7, '10.742468857410566', '122.96910777842398', './assets/img/building-routes/chmsu-tal.jpg', '2025-06-14 10:34:52'),
+(9, 7, '10.742043927749869', '122.96891126405716', './assets/img/building-routes/chmsu-tal.jpg', '2025-06-14 10:35:34');
 
 -- --------------------------------------------------------
 
@@ -342,7 +346,7 @@ ALTER TABLE `buildings_img`
 -- AUTO_INCREMENT for table `building_route`
 --
 ALTER TABLE `building_route`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `facilities`

@@ -36,7 +36,7 @@ $page = "Dashboard";
                     <i class="fa-solid fa-people-group text-2xl bg-lime-600 p-3 py-4 rounded-full text-white "></i>
                     <div class="text-lime-600 text-center lg:text-left">
                         <p class="font-medium ">Total Visitor</p>
-                        <h1 class="font-extrabold ">538 <i class="fa-solid fa-arrow-trend-up ms-1 "></i>
+                        <h1 class="font-extrabold ">735 <i class="fa-solid fa-arrow-trend-up ms-1 "></i>
                         </h1>
                     </div>
                 </div>
@@ -46,7 +46,7 @@ $page = "Dashboard";
                     <i class="fa-solid fa-building-columns text-2xl bg-teal-500 p-3 rounded-full text-white"></i>
                     <div class="text-teal-500 text-center lg:text-left">
                         <p class="font-medium ">Total Buildings</p>
-                        <h1 class="font-extrabold ">538 <i class="fa-solid fa-arrow-trend-up ms-1 "></i>
+                        <h1 class="font-extrabold ">30 <i class="fa-solid fa-arrow-trend-up ms-1 "></i>
                         </h1>
                     </div>
                 </div>
@@ -55,7 +55,7 @@ $page = "Dashboard";
                     <i class="fa-solid fa-house-user text-2xl bg-emerald-500 p-3 rounded-full text-white"></i>
                     <div class="text-emerald-500 text-center lg:text-left">
                         <p class="font-medium ">Total Facilities</p>
-                        <h1 class="font-extrabold ">538 <i class="fa-solid fa-arrow-trend-up ms-1 "></i>
+                        <h1 class="font-extrabold ">45 <i class="fa-solid fa-arrow-trend-up ms-1 "></i>
                         </h1>
                     </div>
                 </div>
@@ -64,7 +64,7 @@ $page = "Dashboard";
                     <i class="fa-solid fa-users text-2xl bg-green-500 p-3 py-4 rounded-full text-white "></i>
                     <div class="text-green-500 text-center lg:text-left">
                         <p class="font-medium ">Total Accounts</p>
-                        <h1 class="font-extrabold ">538 <i class="fa-solid fa-arrow-trend-up ms-1 "></i>
+                        <h1 class="font-extrabold ">5 <i class="fa-solid fa-arrow-trend-up ms-1 "></i>
                         </h1>
                     </div>
                 </div>
@@ -100,7 +100,7 @@ $page = "Dashboard";
                         <div>
                             <div class="flex justify-between">
                                 <div>
-                                    <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">32.4k
+                                    <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">300+
                                     </h5>
                                     <p class="text-base font-normal text-gray-500 dark:text-gray-400">Visitors this week
                                     </p>
@@ -362,7 +362,7 @@ $page = "Dashboard";
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Total Locations Per Building'
+                        text: 'Total Facilities'
                     }
                 }
             }
