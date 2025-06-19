@@ -141,7 +141,7 @@ export function fetchBuildingRoutes(id) {
       url: "./api/fetchBuildingRoutes.php",
       method: "GET",
       data: {
-        id: id
+        id: id,
       },
       success: function (response) {
         resolve(response);
@@ -159,7 +159,7 @@ export function fetchBuildingSearch(value) {
       url: "./api/fetchBuildingSearch.php",
       method: "GET",
       data: {
-        value: value
+        value: value,
       },
       success: function (response) {
         resolve(response);
@@ -170,4 +170,3 @@ export function fetchBuildingSearch(value) {
     });
   });
 }
-

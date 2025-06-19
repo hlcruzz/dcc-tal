@@ -7,9 +7,24 @@ require_once "./user/components/checkToken.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <?php include "./global/links.php" ?>
+
     <script src="./user/js/app.js" type="module"></script>
     <script src="./user/js/maps.js" type="module"></script>
+    <?php include "./global/links.php" ?>
+    <style>
+        .custom-label {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+            position: absolute;
+            transform: translate(-50%, -100%);
+            pointer-events: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -40,10 +55,21 @@ require_once "./user/components/checkToken.php";
 
                 </div>
             </div>
-            <button type="button" id="refresh-map"
-                class="absolute top-0 right-0 mt-5 me-5 p-3 text-lg rounded-full bg-white shadow-lg z-10 text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-all duration-300">
-                <i class="fa-solid fa-arrows-rotate"></i>
-            </button>
+            <div class="fixed top-5 right-5 flex items-center justify-center gap-3 z-10">
+                <button type="button"
+                    class="p-3 text-lg rounded-full bg-white shadow-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-all duration-300 border">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+                <button type="button" id="refresh-map"
+                    class="p-3 text-lg rounded-full bg-white shadow-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-all duration-300">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                </button>
+                <button type="button" id="logout-btn"
+                    class="p-3 text-lg rounded-full bg-white shadow-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-all duration-300">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+
+            </div>
             <div class="fixed bottom-0 left-0 z-12 w-full bg-transparent p-3"></div>
         </div>
 
@@ -51,9 +77,9 @@ require_once "./user/components/checkToken.php";
 
 
     <script>
-    document.getElementById("refresh-map").addEventListener("click", function() {
-        location.reload();
-    });
+        document.getElementById("refresh-map").addEventListener("click", function() {
+            location.reload();
+        });
     </script>
 </body>
 

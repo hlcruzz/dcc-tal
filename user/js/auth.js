@@ -1,4 +1,4 @@
-import addVisitor from "/controllers/VisitorController.js";
+import { registerVisitor } from "/controllers/VisitorController.js";
 $(document).on("click", "#seePass", function () {
   const pwordInput = $("#password");
   if ($(this).hasClass("fa-eye")) {
@@ -78,15 +78,13 @@ $(document).ready(function () {
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        $("#latitude").val(position.coords.latitude);
-        $("#longitude").val(position.coords.longitude);
         $("#registerForm :input").prop("disabled", false);
 
         $("#registerForm").submit(function (event) {
           event.preventDefault();
           const formData = new FormData(this);
 
-          addVisitor(formData).then((res) => {
+          registerVisitor(formData).then((res) => {
             try {
               const data = JSON.parse(res);
               if (!data.status) {

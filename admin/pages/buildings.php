@@ -17,18 +17,18 @@ $page = "Buildings";
     <script type="module" src="./admin/js/app.js"></script>
     <script type="module" src="./admin/js/maps.js"></script>
     <style>
-        .custom-label {
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: bold;
-            white-space: nowrap;
-            position: absolute;
-            transform: translate(-50%, -100%);
-            pointer-events: none;
-        }
+    .custom-label {
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: bold;
+        white-space: nowrap;
+        position: absolute;
+        transform: translate(-50%, -100%);
+        pointer-events: none;
+    }
     </style>
 </head>
 

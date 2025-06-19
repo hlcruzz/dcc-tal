@@ -1,54 +1,45 @@
 <?php
 include "../lib/conn.php";
 include "../lib/key.php";
-require_once "../assets/library/php-jwt-main/src/JWT.php";
+include "../assets/library/php-jwt-main/src/Key.php";
+include "../assets/library/php-jwt-main/src/JWT.php";
+
 
 use Firebase\JWT\JWT;
-
+use Firebase\JWT\Key;
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
     try {
+        $decoded = JWT::decode($_COOKIE['token'], new Key($key, 'HS256'));
+        $building_id = $_POST['buildingId'];
+        $building_name = $_POST['buildingName'];
+        $visit_purpose = $_POST['visitPurpose'];
+        $fname = $decoded->data->fname;
+        $lname = $decoded->data->lname;
+        $phone_num = $decoded->data->phoneNum;
+        $province = $decoded->data->province;
+        $city = $decoded->data->city;
+        $brgy = $decoded->data->brgy;
+        $street = $decoded->data->street;
 
-        if ((empty($_POST['latitude']) || $_POST['latitude'] === null) || (empty($_POST['longitude']) || $_POST['longitude'] === null)) {
-            echo json_encode([
-                "status" => false,
-                "message" => "Please enable location access to proceed."
-            ]);
-            exit;
-        }
-        // JWT payload
-        $payload = [
-            "iss" => "", //domain
-            "aud" => "", //domain
-            "iat" => time(),
-            "exp" => time() + (3000 * 60), // 30 minutes expiration
-            "data" => [
-                "fname" => $_POST['fname'],
-                "lname" => $_POST['lname'],
-                "phoneNum" => $_POST['phoneNum'],
-                "province" => $_POST['province'],
-                "city" => $_POST['city'],
-                "brgy" => $_POST['brgy'],
-                "street" => $_POST['street'],
-                "latitude" => $_POST['latitude'],
-                "longitude" => $_POST['longitude'],
-                "role" => "user"
-            ]
-        ];
+        $query = "INSERT INTO visitors 
+        (building_id, destination, visit_purpose, fname, lname, phone_num, province, city, brgy, street)
+        VALUES 
+        (:building_id, :destination, :visit_purpose, :fname, :lname, :phone_num, :province, :city, :brgy, :street)
+        ;";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(':building_id', $building_id);
+        $stmt->bindParam(':destination', $building_name);
+        $stmt->bindParam(':visit_purpose', $visit_purpose);
+        $stmt->bindParam(':fname', $fname);
+        $stmt->bindParam(':lname', $lname);
+        $stmt->bindParam(':phone_num', $phone_num);
+        $stmt->bindParam(':province', $province);
+        $stmt->bindParam(':city', $city);
+        $stmt->bindParam(':brgy', $brgy);
+        $stmt->bindParam(':street', $street);
+        $stmt->execute();
 
-        // Encode the token
-        $jwt = JWT::encode($payload, $key, 'HS256');
-
-        // Set JWT as HTTP-only cookie
-        setcookie(
-            "token",       // cookie name
-            $jwt,                 // JWT token
-            time() + (3000 * 60),   // 30 minutes expiration
-            "/",                  // path
-            "",                   // domain (current)
-            false,                // secure (true if using HTTPS)
-            true                  // httponly
-        );
         echo json_encode([
             "status" => true,
         ]);

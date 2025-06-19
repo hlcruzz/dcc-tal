@@ -5,6 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
         $query = "SELECT
         buildings.id AS building_id,
         buildings.building_name,
+        buildings.building_desc,
         buildings.is_structured,
         DATE_FORMAT(buildings.created_at, '%M %d, %Y %h:%i %p') AS created_at,  
         buildings.isAccessable,

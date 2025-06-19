@@ -1,7 +1,7 @@
 <div
     class="col-span-2 p-5 hidden xl:flex flex-col bg-white dark:bg-gray-800 shadow-md w-full sticky vh-100 overflow-hidden left-0 top-0">
     <div class="flex gap-3 items-center">
-        <img src="./assets/img/chmsu-logo.png" class="w-[50px] h-[50px] object-cover" alt="">
+        <img loading="lazy" src="./assets/img/chmsu-logo.png" class="w-[50px] h-[50px] object-cover" alt="">
         <div>
             <h1 class="text-gray-800 dark:text-white">CHMSU - DCC</h1>
             <p class="text-xs text-gray-500 dark:text-gray-400">Talisay Campus</p>
@@ -21,14 +21,14 @@
 
             <!-- Visitors -->
             <li
-                class="flex rounded-lg transition-all ease-in-out duration-300 <?php echo $page == 'Visitor' ? 'bg-green-500 text-white' : 'text-gray-600 hover:bg-green-100 dark:text-gray-300 dark:hover:bg-green-800' ?> text-sm">
+                class="flex rounded-lg transition-all ease-in-out duration-300 <?php echo $page == 'Visitors' ? 'bg-green-500 text-white' : 'text-gray-600 hover:bg-green-100 dark:text-gray-300 dark:hover:bg-green-800' ?> text-sm">
                 <a href="#" class="w-full p-4 ps-6">
                     <i class="fa-solid fa-user-group me-2"></i>Visitors
                 </a>
             </li>
 
             <li
-                class="flex rounded-lg transition-all ease-in-out duration-300 <?php echo $page == 'Visitor' ? 'bg-green-500 text-white' : 'text-gray-600 hover:bg-green-100 dark:text-gray-300 dark:hover:bg-green-800' ?> text-sm">
+                class="flex rounded-lg transition-all ease-in-out duration-300 <?php echo $page == 'Buildings' ? 'bg-green-500 text-white' : 'text-gray-600 hover:bg-green-100 dark:text-gray-300 dark:hover:bg-green-800' ?> text-sm">
                 <a href="/buildings" class="w-full p-4 ps-6">
                     <i class="fa-solid fa-building me-2"></i>Buildings
                 </a>

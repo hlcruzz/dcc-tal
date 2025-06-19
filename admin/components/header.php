@@ -15,7 +15,7 @@
                 class="top-0 right-0 absolute border-gray-300 dark:border-gray-700 bg-red-500 text-[8px] p-1 rounded-full text-white">22</span>
         </div>
         <div class="relative border rounded-full border-gray-300 dark:border-gray-600">
-            <img class="w-10 h-10 rounded-full object-cover" src="./assets/img/default.jpg" alt="">
+            <img loading="lazy" class="w-10 h-10 rounded-full object-cover" src="./assets/img/default.jpg" alt="">
             <span
                 class="top-0 left-7 absolute w-3.5 h-3.5 bg-green-400 border-2 border-gray-300 dark:border-gray-600 rounded-full"></span>
         </div>

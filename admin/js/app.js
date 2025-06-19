@@ -19,7 +19,7 @@ import {
   deleteFacilityImg,
   deleteFacility,
 } from "../../Controllers/FacilitiesController.js";
-// import { Modal } from "flowbite";
+import { fetchAllVisitors } from "../../Controllers/VisitorController.js";
 
 $(document).ready(function () {
   Theme();
@@ -65,6 +65,8 @@ function ModalInit() {
   new Modal(document.getElementById("edit-building-modal"));
   new Modal(document.getElementById("add-facility-modal"));
   new Modal(document.getElementById("edit-facility-modal"));
+  new Modal(document.getElementById("add-building-route-modal"));
+  new Modal(document.getElementById("edit-building-route-modal"));
 }
 function FetchEvents() {}
 function DataTables() {
@@ -245,7 +247,7 @@ function DataTables() {
           <td data-label="#">${element.id}</td>
           <td data-label="Building ID">${element.building_id}</td>
           <td data-label="Img">
-            <img src="${element.img}" alt="${element.building_id}" class="w-12 h-12 object-cover rounded-md">
+            <img loading="lazy" src="${element.img}" alt="${element.building_id}" class="w-12 h-12 object-cover rounded-md">
           </td>
           <td data-label="Latitude">${element.latitude}</td>
           <td data-label="Longitude">${element.longitude}</td>
@@ -279,6 +281,47 @@ function DataTables() {
       });
     });
   }
+
+  fetchAllVisitors()
+    .then((res) => {
+      const obj = JSON.parse(res);
+      if (!obj.status) {
+        alert(obj.message);
+        return;
+      }
+      console.log(obj);
+      const tableSelector = `#visitors-table`;
+      const tbody = $(`${tableSelector} tbody`);
+      tbody.empty();
+      obj.data.forEach((element) => {
+        const content = `
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+          <td data-label="#" class="font-medium text-gray-900 dark:text-gray-100 whitespace-nowrap">
+          ${element.id}
+          </td>
+          <td data-label="Building ID">${element.building_id}</td>
+          <td data-label="First Name">${element.fname}</td>
+          <td data-label="Last Name">${element.lname}</td>
+          <td data-label="Phone #">${element.phone_num}</td>
+          <td data-label="Province">${element.province}</td>
+          <td data-label="City">${element.city}</td>
+          <td data-label="Barangay">${element.brgy}</td>
+          <td data-label="Street">${element.street}</td>
+          <td data-label="Visit Purpose">${element.visit_purpose}</td>
+          <td data-label="Destination">${element.destination}</td>
+          <td data-label="Date Visited">${element.visited_at}</td>
+        </tr>
+      `;
+        tbody.append(content);
+      });
+      SimpleDataTable(tableSelector, {
+        hiddenColumns: [],
+        filename: `Visitors List`,
+      });
+    })
+    .catch((error) => {
+      alert(error);
+    });
 }
 function ChartsJs() {}
 
@@ -399,7 +442,7 @@ function ClickEvents() {
       const imgID = imgIDs[index];
       const slide = `
         <div class="swiper-slide relative">
-          <img src="${src}" class="w-full h-full object-cover" alt="Slide Image">
+          <img loading="lazy" src="${src}" class="w-full h-full object-cover" alt="Slide Image">
           ${
             imgIDs.length !== 1
               ? `<i class="delete-building-img cursor-pointer fa-solid fa-trash absolute bottom-3 right-3 text-md p-2 px-2.5 rounded-full text-red-500 dark:text-red-700 bg-white dark:bg-gray-800" data-img-id="${imgID}" title="${index}"></i>`
@@ -526,7 +569,7 @@ function ClickEvents() {
       const imgID = imgIDs[index];
       const slide = `
         <div class="swiper-slide relative">
-          <img src="${src}" class="w-full h-full object-cover" alt="Slide Image">
+          <img loading="lazy" src="${src}" class="w-full h-full object-cover" alt="Slide Image">
           ${
             imgIDs.length !== 1
               ? `<i class="delete-facility-img cursor-pointer fa-solid fa-trash absolute bottom-3 right-3 text-md p-2 px-2.5 rounded-full text-red-500 dark:text-red-700 bg-white dark:bg-gray-800" data-img-id="${imgID}" title="${index}"></i>`

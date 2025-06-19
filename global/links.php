@@ -1,23 +1,29 @@
-<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+<!-- <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" /> -->
+<script src="../node_modules/flowbite/dist/flowbite.min.js"></script>
+<link href="../node_modules/flowbite/dist/flowbite.min.css" rel="stylesheet" />
 <!-- Swiper CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" /> -->
+<link rel="stylesheet" href="../node_modules/swiper/swiper-bundle.min.css" />
 
 <!-- Swiper JS -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> -->
+<script src="../node_modules/swiper/swiper-bundle.min.js"></script>
 
 <link rel="stylesheet" href="./global/app.css">
 <script src="./assets/library/fontawesome/js/all.min.js"></script>
 <script src="./assets/library/jquery/jquery-3.7.1.min.js"></script>
 <script src="./assets/library/jquery-cookies/jquery.cookie.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+<script src="../node_modules/chart.js/dist/chart.umd.min.js"></script>
 
-<!-- <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> -->
 <link href="./src/output.css" rel="stylesheet">
 
-<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.46.0/dist/apexcharts.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.46.0/dist/apexcharts.min.js"></script> -->
+<script src="../node_modules/apexcharts/dist/apexcharts.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script> -->
+<script src="../node_modules/simple-datatables/dist/umd/simple-datatables.js"></script>
 
 <!-- Required dependencies for Excel and PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -30,6 +36,8 @@
 <!-- For PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
-<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHSzo9ZR5hlmIuBoA7RdspKtGFKC0ahjI&callback=initMap">
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHSzo9ZR5hlmIuBoA7RdspKtGFKC0ahjI&callback=initMap" async
+    defer>
 </script>

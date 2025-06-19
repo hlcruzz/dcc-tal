@@ -13,7 +13,7 @@
     <div class="bg-white sm:bg-sky-200/80 h-full flex items-center justify-center overflow-auto">
         <div class="bg-white p-10 w-full max-h-full overflow-auto sm:w-[500px] ">
             <div class="flex flex-col justify-center items-center text-center">
-                <img src="./assets/img/chmsu-logo.png" class="w-[50px] h-[50px] object-cover" alt="">
+                <img loading="lazy" src="./assets/img/chmsu-logo.png" class="w-[50px] h-[50px] object-cover" alt="">
                 <h1 class="text-2xl mt-3">Digital Campus Concierge - Talisay</h1>
                 <h1 class="text-2xl mt-3">Admin Login</h1>
             </div>
